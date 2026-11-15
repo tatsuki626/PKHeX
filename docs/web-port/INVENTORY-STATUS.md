@@ -12,6 +12,17 @@ A recursive Git tree scan returned:
 
 These are file counts only. They are **not** the number of distinct Forms or dialogs: some designer partials belong to UserControls, some classes may be code-only, and generated designer files are paired with implementation files.
 
+## Architecture inspection findings (2026-11-15)
+
+See [ARCHITECTURE-INSPECTION.md](ARCHITECTURE-INSPECTION.md).
+
+- `PKHeX.Core` targets `net10.0` and is cross-platform: reuse it directly.
+- `PKHeX.WinForms` and all three `PKHeX.Drawing*` projects target `net10.0-windows`; do not reference them from the Linux ASP.NET host.
+- The existing `tatsuki626/pkhex-docker` branch already provides a .NET 10 ASP.NET host, modular APIs, browser frontend, save lifecycle, auth, backups, undo/redo, audit, Docker, CI, and tests.
+- Recommended: extend that existing host rather than create a competing web host. Its current PKHeX.Core source pin is `3767c1367aeee2db93c2023d9938e9334e9d9819`.
+- Representative source review confirms that UI-heavy files such as `Main.cs`, `PKMEditor.cs`, and `BatchEditor.cs` cannot be linked wholesale, but they already call reusable Core operations. Replace their UI and keep those operations shared.
+- The full class/window inventory and one-to-one mapping are still outstanding. No build or runtime test was run during this source-only inspection.
+
 ## Reuse-first assessment procedure
 
 For each source class, inspect its declaration, base type, namespaces, project references, and dependencies. Classify it as one of:
@@ -38,11 +49,11 @@ For each Form, inspect its launch sites (menu handlers, button handlers, constru
 |---|---|
 | Establish one-to-one window parity rule | Complete |
 | Establish reuse-first architecture and conversion rules | Complete |
-| Create isolated web-port branch | Complete |
-| Commit initial porting plan | Complete |
-| Count WinForms C# and designer files | Complete |
-| Inspect project references and classify reusable classes | Not started |
-| Evaluate companion `pkhex-docker` ASP.NET host for reuse | Not started |
+| Inspect Core/WinForms/Drawing target frameworks and project references | Complete |
+| Inspect representative WinForms UI/Core coupling | Complete |
+| Inspect existing ASP.NET host architecture and source pin | Complete |
+| Commit architecture inspection report | In progress |
+| Verify existing web-host branch head, CI, and Docker build | Not started |
 | Classify all Forms vs UserControls | Not started |
 | Enumerate every window's controls and commands | Not started |
 | Map every window and shared service to web counterparts | Not started |
