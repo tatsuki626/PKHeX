@@ -21,7 +21,8 @@ See [ARCHITECTURE-INSPECTION.md](ARCHITECTURE-INSPECTION.md).
 - The existing `tatsuki626/pkhex-docker` branch already provides a .NET 10 ASP.NET host, modular APIs, browser frontend, save lifecycle, auth, backups, undo/redo, audit, Docker, CI, and tests.
 - Recommended: extend that existing host rather than create a competing web host. Its current PKHeX.Core source pin is `3767c1367aeee2db93c2023d9938e9334e9d9819`.
 - Representative source review confirms that UI-heavy files such as `Main.cs`, `PKMEditor.cs`, and `BatchEditor.cs` cannot be linked wholesale, but they already call reusable Core operations. Replace their UI and keep those operations shared.
-- The full class/window inventory and one-to-one mapping are still outstanding. No build or runtime test was run during this source-only inspection.
+- The inspected web-host branch head is `136d9d43135a9088ae15dc5bc21c01fd35ae58ef`; its latest Build and Publish container CI runs both fail ([Build](https://github.com/tatsuki626/pkhex-docker/actions/runs/43678752879), [Publish](https://github.com/tatsuki626/pkhex-docker/actions/runs/43678752910)). Fix/verify this before adopting it as the implementation baseline.
+- The full class/window inventory and one-to-one mapping are still outstanding. No local build or runtime test was run during this source-only inspection.
 
 ## Reuse-first assessment procedure
 
