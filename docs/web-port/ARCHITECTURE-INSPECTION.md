@@ -82,7 +82,7 @@ This is existing implementation, not proof that every WinForms window is already
 
 ## Important caveats / follow-up checks
 
-- The inspected `pkhex-docker` branch has not been built or run during this inspection. Verify branch head, CI, Docker build, and smoke suite before selecting it as the integration base.
+- The inspected `pkhex-docker` branch points to `136d9d43135a9088ae15dc5bc21c01fd35ae58ef` (the Phase 16d real-fixture merge). The latest Build and Publish container runs for that commit, created 2026-11-15, both report **failure**: [Build run #43678752879](https://github.com/tatsuki626/pkhex-docker/actions/runs/43678752879) and [Publish run #43678752910](https://github.com/tatsuki626/pkhex-docker/actions/runs/43678752910). The branch is therefore a strong architectural base, but it is not currently verified green; inspect and repair CI before using it as the implementation baseline.
 - The source pin in `pkhex-docker` is from 2026-11-07; compare it with the desired fork baseline and check for API drift before changing it.
 - `PKHeX.Drawing*` are Windows-targeted. Sprite/image rendering must be solved separately for web (for example, serve compatible sprite assets or implement a cross-platform renderer); do not pull System.Drawing into the Linux web process by accident.
 - The current web app's existing feature list must be cross-referenced against a complete Form/launch-point inventory. Feature overlap alone does not establish one-to-one UI parity.
