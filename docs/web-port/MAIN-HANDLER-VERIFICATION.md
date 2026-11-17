@@ -95,3 +95,8 @@ The host now separates desktop Main's current-PKM actions from batch-to-box impo
 - The editor includes preview/confirmation, export/copy, and includes unsaved format-specific fields filtered against the current format schema.
 
 The complete local CI suite has not yet been run for this implementation. The current serializer uses PKHeX's standard Showdown token layout with configured language and PKM context; the desktop's custom per-context export preferences are not yet persisted/configurable in web settings.
+
+
+### Current-editor Showdown integration — local CI verified (2026-11-17)
+
+The host implementation and targeted smoke tests for active-PKM Showdown preview, apply and export passed the complete local CI suite. Maintainer result: `ALL LOCAL CI CHECKS PASSED`, finished `2026-11-17T10:08:56+04:00`. This verifies the current implementation's build and test gate. It does not complete custom per-context desktop export preference parity; QR, report-grid and encounter-database workflows also remain partial as listed above.
