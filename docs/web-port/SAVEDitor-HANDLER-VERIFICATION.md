@@ -40,7 +40,7 @@ The host now mirrors this behaviour:
 
 The ORAS `SAV6AO` fixture is the concrete two-group case (`DaycareCount == 2`). Smoke coverage checks groups 0 and 1, per-group egg-state isolation, 64-bit seed and experience capability, invalid group rejection, and the browser confirmation/selected-group contract.
 
-**Result: implemented on host; local CI pending.**
+**Result: implemented; complete local CI passed on 2026-11-17** at host commit `734bbdb3d0b5793a4516af061f2bb56a0ddaf7f8` (report `pkhex-local-ci-20261117-181452-197845696.md`). The suite verifies per-group egg and RNG isolation, group selection contract and capability handling.
 
 ## Generation-specific save tools
 
@@ -54,7 +54,7 @@ The browser has confirmed general routes/UI for trainer, inventory, Pokédex, gi
 ## Required implementation/verification order
 
 1. Checksum diagnostics and stored-entity bulk verification are implemented and passed the complete local CI suite on 2026-11-17. The CI suite covers valid/invalid/edited checksum response paths and stored-entity BulkAnalysis response shape; retain representative real-save report comparison as follow-up parity evidence.
-2. SAV4BR four-slot selection and typed daycare RNG seed editing passed the complete local CI suite on 2026-11-17. Remaining SAV4BR work is BattlePass editor parity and explicit dependent-view invalidation. Multi-group daycare switching/confirmation is implemented on the host and awaits local CI.
+2. SAV4BR four-slot selection and typed daycare RNG seed editing passed the complete local CI suite on 2026-11-17. Remaining SAV4BR work is BattlePass editor parity and explicit dependent-view invalidation. Multi-group daycare switching/confirmation passed complete local CI on 2026-11-17.
 3. Compare box import/export and save export pre-write cleanup/validation.
 4. Map each generation-specific sub-editor to its existing web panel/API; record field-level omissions and modal semantics.
 5. Test cancel vs commit, undo/redo, save reload and checksum state for every mutating workflow.
