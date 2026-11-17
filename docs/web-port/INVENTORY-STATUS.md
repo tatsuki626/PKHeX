@@ -7,7 +7,7 @@ Desktop project: `PKHeX.WinForms`
 Web host: `tatsuki626/pkhex-docker`, branch `experiment/upstream-winforms-web-port`  
 PKHeX.Core source pin used by the web host: `3767c1367aeee2db93c2023d9938e9334e9d9819`
 
-The original recursive source-tree scan of the desktop baseline found:
+The current recursive source-tree scan of desktop `master` at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` found:
 
 - 369 C# source files under `PKHeX.WinForms/`
 - 159 WinForms designer partial files (`*.Designer.cs`)
@@ -73,12 +73,12 @@ A window cannot be marked parity-verified while any meaningful control or comman
 | Establish one-to-one window parity rule | Complete |
 | Update delivery sequence for inventory-first completion | Complete |
 | Record Phase 17 audit, parity and release workstreams in web roadmap | Complete |
-| Freeze exact desktop inventory commit | Pending |
-| Generate complete type/declaration inventory | Not started |
-| Classify Forms, dialogs, UserControls and components | Not started |
-| Trace every Form launch point and owning window | Not started |
+| Freeze exact desktop inventory commit | Complete: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` |
+| Generate complete type/declaration inventory | In progress: provisional `inventory.csv` contains 113 inspected Form declarations and 42 inspected UserControl declarations; not exhaustive |
+| Classify Forms, dialogs, UserControls and components | In progress: first 155 declaration rows classified; remaining source files and code-only types pending |
+| Trace every Form launch point and owning window | In progress: 11 Main.cs launch points verified; all other owners/callers pending |
 | Enumerate meaningful controls, commands and validation | Not started |
-| Assess source reuse and Windows-only dependencies per type | Not started |
+| Assess source reuse and Windows-only dependencies per type | Partial: initial reuse treatment recorded; dependency-level review pending |
 | Map each Form to existing/new web counterpart | Not started |
 | Prioritize and implement identified parity gaps | Pending inventory |
 | Expand real-save and desktop-equivalence coverage | In progress |
@@ -100,3 +100,13 @@ Generate the authoritative type inventory from the pinned desktop source tree. T
 
 Do not start implementing new screens until the inventory and existing-web mapping show a real gap. Targeted correctness fixes discovered during inventory may proceed independently.
 
+
+
+## First inventory pass (2026-11-17)
+
+- Frozen desktop baseline: `master` at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d`.
+- Recursive tree: 369 C# files, 159 designer files; 12171 total tree entries.
+- Created [`inventory.csv`](inventory.csv), a provisional seed with 113 directly inspected Form declarations and 42 directly inspected UserControl declarations. This is not the final Form count; other source files, code-only windows and designer partials remain to be classified.
+- Verified main-window launch sites in `Main.cs` for About, ReportGrid, KChart, SAV_Database, SAV_Encounters, SAV_MysteryGiftDB, SettingsEditor, BoxExporter, BatchEditor, SAV_FolderList and QR.
+- Examples of important classification findings: `PKMEditor`, `BoxEditor`, `PartyEditor` and `SAVEditor` are UserControls, not independent Forms; `PokePreview`, `BallBrowser` and `StatusBrowser` are Forms despite residing under Controls; several Gen 4 Pokeathlon/Safari and Gen 5 Join Avenue classes are UserControls nested within larger editor workflows.
+- The CSV intentionally marks exact web counterpart mapping, control-level parity and full launch ownership as pending. No parity completion claim is made from this seed.
