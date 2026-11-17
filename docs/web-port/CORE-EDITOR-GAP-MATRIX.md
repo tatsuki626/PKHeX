@@ -149,3 +149,10 @@ Main's child callbacks cross editor boundaries and must remain in the parity mat
 - Host `Program.cs` and `wwwroot/js/app.js` on `experiment/upstream-winforms-web-port`.
 
 Static-audit limitation: each child form's own designer and implementation still need field-by-field inspection before claiming complete parity. The launch inventory is complete for SAVEditor dispatch in the audited source, but this document intentionally keeps the specialist forms in **missing/needs-trace** until their own controls and Core interfaces are audited.
+
+
+### Verification update — 2026-11-17
+
+- Main current-PKM Showdown preview/apply/export: **local CI verified**. The active-editor endpoints, draft-aware UI, schema-field filtering, stale-preview protection, no-mutation export, and undoable apply passed the complete local CI suite at `2026-11-17T10:08:56+04:00`.
+- Remaining limitation: web settings do not yet expose the desktop's custom per-context Showdown export preferences. Treat this as a parity follow-up, not a CI blocker.
+- Main QR, report-grid and encounter-trainer-database flows remain partial pending end-to-end tracing. PKMEditor cross-field/dependent-field validation remains a high-priority gap.
