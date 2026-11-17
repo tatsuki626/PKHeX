@@ -22,7 +22,7 @@ This is static source tracing, not runtime parity certification.
 |---|---|---|
 | `ClickVerifyCHK` — refuse checksum verification if save is edited; report valid checksums; optionally copy checksum details for invalid save | `GET /saves/{id}/verification/checksum`; browser Verify checksums control; durable `SaveEntry.HasBeenEdited` marker survives restart | **Implemented; local CI passed (2026-11-17)** — valid/invalid/edited states and invalid checksum details are exposed without mutating the save |
 | `ClickVerifyStoredEntities` — `Core.Bulk.BulkAnalysis` over all stored entities; report clean or offer detailed localized report copy | `GET /saves/{id}/verification/stored-entities` calls `PKHeX.Core.Bulk.BulkAnalysis`; browser Verify stored Pokémon control renders localized report and copy action | **Implemented; local CI passed (2026-11-17)** — includes box/party/other storage discovered by PKHeX.Core; separate from box-only legality report |
-| `UpdateSaveSlot` — SAV4BR slot switch, closes battle-pass editor, resets box names and reloads viewers | `GET/PATCH /saves/{id}/slot-selection`; browser four-slot selector refreshes active save panels | **Partial** — slot selection, range validation and view refresh are implemented; BattlePass editor parity and explicit dependent-view invalidation remain open |
+| `UpdateSaveSlot` — SAV4BR slot switch, closes battle-pass editor, resets box names and reloads viewers | `GET/PATCH /saves/{id}/slot-selection`; browser four-slot selector refreshes active save panels and closes/discards any staged Battle Pass editor | **Implemented on host; local CI pending for Battle Pass slice** — slot selection and editor invalidation are implemented |
 | `UpdateStringSeed` / `SetDaycareSeed` — strict hexadecimal validation; supports 16/32/64/128-bit daycare RNG seeds; marks save edited | `GET /saves/{id}/daycare` returns typed seed per group; `PATCH /saves/{id}/daycare/seed` writes through the matching PKHeX interface; browser seed field | **Implemented; local CI passed (2026-11-17)** — exact-width hexadecimal validation, per-group capability gating, audit and save persistence; tests cover Gen4/5/7 and Emerald Gen3 32-bit, including the Gen5 BW-vs-B2W2 capability distinction |
 
 ## Daycare
@@ -60,3 +60,10 @@ The browser has confirmed general routes/UI for trainer, inventory, Pokédex, gi
 5. Test cancel vs commit, undo/redo, save reload and checksum state for every mutating workflow.
 
 Status rule: a route is only a candidate until its UI, validation, capability gating, persistence and read-after-write behaviour are verified.
+
+
+### SAV4BR Battle Pass editor (2026-11-17)
+
+WinForms `SAV_BattlePass` stages edits on a cloned save and on Save calls `Origin.BattlePasses.CopyChangesFrom(SAV.BattlePasses)`; Cancel closes without copying. The host now follows this transaction boundary. It uses PKHeX's `BattlePassAccessor` and `BattlePass` objects, with staged profile/raw data editing, fixed-size .bin import/export, pass reorder/delete/unlock operations, explicit commit/cancel and one persisted undo snapshot on commit. Rental pass deletion is rejected by the core accessor semantics. A slot switch closes the UI and removes the staged session; commit also validates the original slot. Undo/redo invalidates staged sessions.
+
+Smoke coverage has been added for the transaction boundary, profile fields, binary size validation, reorder, unlock, rental deletion protection, cancel isolation, commit/undo and slot invalidation. **Host implementation pushed; full local CI pending.** Full per-party Pokémon editor controls still require a control-by-control parity pass.
