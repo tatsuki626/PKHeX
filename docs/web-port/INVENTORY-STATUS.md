@@ -115,3 +115,17 @@ Do not start implementing new screens until the inventory and existing-web mappi
 
 
 The next inventory subtask is to inspect the two possible orphan Forms and then capture control/command inventories for each reachable Form, starting with the shared Main/SAVEditor workflows. Do not count a Form as out of scope until its references and launch paths have been checked.
+
+
+## Core control-level pass (2026-11-17)
+
+Created [`control-audit.csv`](control-audit.csv) from the desktop designer files for the three central surfaces:
+
+| Surface | Designer fields | Explicit event bindings |
+|---|---:|---:|
+| Main | 44 | 34 |
+| SAVEditor | 84 | 67 |
+| PKMEditor | 218 | 115 |
+| **Total** | **346** | **216** |
+
+This is a source inventory, not a web parity result. The next review must classify each control as functional, decorative/layout, conditional by save capability, or dynamically created; map functional controls and commands to the web UI/API; and inspect validation/state/persistence semantics in the implementation handlers. The designer regex captures explicit method-group event bindings; dynamically registered events and inherited controls need a separate source review.
