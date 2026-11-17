@@ -77,7 +77,7 @@ A window cannot be marked parity-verified while any meaningful control or comman
 | Freeze exact desktop inventory commit | Complete: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` |
 | Generate complete type/declaration inventory | In progress: all 158 designer-paired implementation declarations inspected; 114 Forms and 44 UserControls recorded in provisional `inventory.csv`; code-only classes also scanned |
 | Classify Forms, dialogs, UserControls and components | In progress: all 158 designer-paired declarations classified; 52 code-only files scanned for additional window declarations; linked helper/component inventory still being expanded |
-| Trace every Form launch point and owning window | In progress: 11 Main.cs launch points verified; launch/owner tracing for the remaining Forms pending |
+| Trace every Form launch point and owning window | In progress: launch sites traced for 112/114 Forms; two possible orphans require global reference verification |
 | Enumerate meaningful controls, commands and validation | Not started |
 | Assess source reuse and Windows-only dependencies per type | Partial: initial reuse treatment recorded; dependency-level review pending |
 | Map each Form to existing/new web counterpart | Not started |
@@ -112,3 +112,6 @@ Do not start implementing new screens until the inventory and existing-web mappi
 - Verified main-window launch sites in `Main.cs` for About, ReportGrid, KChart, SAV_Database, SAV_Encounters, SAV_MysteryGiftDB, SettingsEditor, BoxExporter, BatchEditor, SAV_FolderList and QR.
 - Important classification findings: `PKMEditor`, `BoxEditor`, `PartyEditor` and `SAVEditor` are UserControls, not independent Forms; `PokePreview`, `BallBrowser` and `StatusBrowser` are Forms despite residing under Controls; several Gen 4 Pokeathlon/Safari and Gen 5 Join Avenue classes are UserControls nested within larger editor workflows.
 - The inventory records verified launch sites for the Main window, SAVEditor, PKMEditor and selected nested dialogs; remaining launch ownership, exact web counterpart mapping and control-level parity are pending. No parity completion claim is made from this seed.
+
+
+The next inventory subtask is to inspect the two possible orphan Forms and then capture control/command inventories for each reachable Form, starting with the shared Main/SAVEditor workflows. Do not count a Form as out of scope until its references and launch paths have been checked.
