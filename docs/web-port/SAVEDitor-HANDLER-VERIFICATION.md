@@ -22,7 +22,7 @@ This is static source tracing, not runtime parity certification.
 |---|---|---|
 | `ClickVerifyCHK` — refuse checksum verification if save is edited; report valid checksums; optionally copy checksum details for invalid save | `GET /saves/{id}/verification/checksum`; browser Verify checksums control; durable `SaveEntry.HasBeenEdited` marker survives restart | **Implemented; local CI passed (2026-11-17)** — valid/invalid/edited states and invalid checksum details are exposed without mutating the save |
 | `ClickVerifyStoredEntities` — `Core.Bulk.BulkAnalysis` over all stored entities; report clean or offer detailed localized report copy | `GET /saves/{id}/verification/stored-entities` calls `PKHeX.Core.Bulk.BulkAnalysis`; browser Verify stored Pokémon control renders localized report and copy action | **Implemented; local CI passed (2026-11-17)** — includes box/party/other storage discovered by PKHeX.Core; separate from box-only legality report |
-| `UpdateSaveSlot` — SAV4BR slot switch, closes battle-pass editor, resets box names and reloads viewers | No battle-pass/current-save-slot selector or matching API route found | **Missing** — generation-specific multi-slot selection and dependent editor invalidation |
+| `UpdateSaveSlot` — SAV4BR slot switch, closes battle-pass editor, resets box names and reloads viewers | `GET/PATCH /saves/{id}/slot-selection`; browser four-slot selector refreshes active save panels | **Partial** — slot selection, range validation and view refresh are implemented; BattlePass editor parity and explicit dependent-view invalidation remain open |
 | `UpdateStringSeed` / `SetDaycareSeed` — strict hexadecimal validation; supports 16/32/64/128-bit daycare RNG seeds; marks save edited | `GET /saves/{id}/daycare` returns typed seed per group; `PATCH /saves/{id}/daycare/seed` writes through the matching PKHeX interface; browser seed field | **Implemented; local CI pending** — exact-width hexadecimal validation, per-group capability gating, audit and save persistence; tests cover Gen4/5/7 and Emerald Gen3 32-bit |
 
 ## Daycare
@@ -50,7 +50,7 @@ The browser has confirmed general routes/UI for trainer, inventory, Pokédex, gi
 ## Required implementation/verification order
 
 1. Checksum diagnostics and stored-entity bulk verification are implemented and passed the complete local CI suite on 2026-11-17. The CI suite covers valid/invalid/edited checksum response paths and stored-entity BulkAnalysis response shape; retain representative real-save report comparison as follow-up parity evidence.
-2. Add SAV4BR multi-slot selection and daycare multi-group switching/confirmation; typed daycare RNG seed editing is implemented and awaits local CI.
+2. SAV4BR four-slot selection is implemented and covered by a generated fixture; remaining work is BattlePass editor parity and explicit dependent-view invalidation. Daycare multi-group switching/confirmation remains open; typed daycare RNG seed editing passed local CI.
 3. Compare box import/export and save export pre-write cleanup/validation.
 4. Map each generation-specific sub-editor to its existing web panel/API; record field-level omissions and modal semantics.
 5. Test cancel vs commit, undo/redo, save reload and checksum state for every mutating workflow.
