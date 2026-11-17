@@ -77,7 +77,7 @@ A window cannot be marked parity-verified while any meaningful control or comman
 | Freeze exact desktop inventory commit | Complete: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` |
 | Generate complete type/declaration inventory | In progress: all 158 designer-paired implementation declarations inspected; 114 Forms and 44 UserControls recorded in provisional `inventory.csv`; code-only classes also scanned |
 | Classify Forms, dialogs, UserControls and components | In progress: all 158 designer-paired declarations classified; 52 code-only files scanned for additional window declarations; linked helper/component inventory still being expanded |
-| Trace every Form launch point and owning window | In progress: launch sites traced for 113/114 Forms; `ErrorWindow` is confirmed reachable from both production exception handlers; `SAV_Capture7GG` remains the sole unverified candidate |
+| Trace every Form launch point and owning window | In progress: launch sites traced for 114/114 Forms; `ErrorWindow` and `SAV_Capture7GG` are both confirmed reachable |
 | Enumerate meaningful controls, commands and validation | Not started |
 | Assess source reuse and Windows-only dependencies per type | Partial: initial reuse treatment recorded; dependency-level review pending |
 | Map each Form to existing/new web counterpart | Not started |
@@ -136,8 +136,12 @@ This is a source inventory, not a web parity result. The next review must classi
 Created [`window-mapping.csv`](window-mapping.csv) with feature-level mappings for Main, SAVEditor and PKMEditor. The mappings identify the existing browser shell, save workspace and schema-driven Pokémon editor, plus their known API route families. These are candidate counterparts only: menu/control-level mapping, capability rules, validation, error/cancel behavior and parity tests remain to be checked. No duplicate screen should be created before that comparison.
 
 
-## Orphan-window cross-check (2026-11-17)
+## Window reachability cross-check (2026-11-17)
 
 - **ErrorWindow is not an orphan.** Its static `ShowErrorDialog` entry point is called by both `Program.UIThreadException` and `Program.CurrentDomain_UnhandledException` in non-DEBUG builds. The dialog exposes a friendly message, exception details, loaded assemblies, copy-details, continue and abort/exit behavior. It needs a web-host error-reporting equivalent; it must not be excluded from parity.
-- **SAV_Capture7GG remains an unverified orphan candidate.** Its implementation is a Gen 7 Let's Go capture/transferred-count editor over `SAV7b` data. No launch reference was found in `Main.cs`, `SAVEditor.cs` or the inspected top-level launch sites. The GitHub code-search endpoint returned no indexed matches, but that response was incomplete and is not proof of global absence. Keep it in scope until a complete source-reference scan confirms it is unreachable or its feature is intentionally excluded.
+- **SAV_Capture7GG is reachable; it is not an orphan.** The launch chain is `SAVEditor.cs` (the `SAV7b` branch in the Pokédex dispatch) → `SAV_PokedexGG` → `SAV_Capture7GG`. `SAV_PokedexGG.cs:59` calls `new SAV_Capture7GG(SAV).ShowDialog()`. The dialog edits Let's Go per-species captured/transferred counts and aggregate totals, supports bulk setting and sum-total calculation, and commits changes to the origin save only on Save; Cancel closes without copying changes. The inventory row now records this nested launch chain and required web behavior.
 - The inventory row for `ErrorWindow` now records its two production exception-handler call paths. No code was changed.
+
+
+- The earlier absence finding was caused by searching only direct launchers in `Main.cs` and `SAVEditor.cs`. The actual dialog is launched one level deeper from `SAV_PokedexGG`; this demonstrates why nested Form ownership must be traced recursively rather than inferred from top-level menu dispatch alone.
+- **Result: 0 confirmed orphan Forms among the two candidates checked.** Both are reachable and remain in the parity scope. All 114 Forms now have a traced launch/owner path in the first-pass inventory; this does not mean their web parity has been audited.
