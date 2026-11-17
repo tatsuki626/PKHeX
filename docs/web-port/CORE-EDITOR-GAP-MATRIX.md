@@ -37,7 +37,7 @@ This is a source-to-host static audit. A matching endpoint or panel is a **candi
 | G-006 | SAVEditor / checksum | Dedicated checksum verification | Implemented in host as GET `/saves/{id}/verification/checksum` with durable edited-state guard and `SaveFile.ChecksumInfo` diagnostics; browser exposes verify/copy workflow | **Implemented; local CI passed (2026-11-17)** |
 | G-007 | SAVEditor / entity audit | Whole-save stored-entity analysis | Implemented in host as GET `/saves/{id}/verification/stored-entities` using `PKHeX.Core.Bulk.BulkAnalysis`, localized report, entity/finding/clone counts; browser exposes report/copy workflow | **Implemented; local CI passed (2026-11-17)** |
 | G-008 | SAVEditor / daycare | RNG seed editing | Implemented: GET daycare returns capability-typed 16/32/64/128-bit hexadecimal seeds per group; PATCH /daycare/seed enforces exact width/hex, writes through PKHeX interfaces, persists and audits. Browser editor exposes a per-group seed field. Smoke tests cover Gen4 32-bit, Gen5 64-bit, Gen7 128-bit, Emerald Gen3 32-bit, invalid width and undo. | Implemented; local CI pending |
-| G-009 | SAVEditor / SAV4BR | Current save-slot selection | GET/PATCH `/saves/{id}/slot-selection`; browser selector; four-slot fixture and smoke coverage. Slot navigation is intentionally not an undoable content edit. transactional BattlePass API/UI is now implemented on host (list/detail, profile and raw data edits, import/export, reorder/delete/unlock, explicit commit/cancel); local CI pending. | **Implemented (selection); partial overall** |
+| G-009 | SAVEditor / SAV4BR | Current save-slot selection | GET/PATCH `/saves/{id}/slot-selection`; browser selector; four-slot fixture and smoke coverage. Slot navigation is intentionally not an undoable content edit. Transactional BattlePass API/UI is implemented on host (list/detail, profile and raw data edits, import/export, reorder/delete/unlock, explicit commit/cancel); local CI pending. | **Implemented (selection); partial overall** |
 | G-010 | SAVEditor / save export | Pre-write validation/cleanup | Download route exists; desktop `ValidateChildren()` and `IStorageCleanup.FixStoragePreWrite()` semantics are not established | P1 |
 | G-011 | SAVEditor / generation children | Specialist save editors | Most child forms have no corresponding route or panel; generic save blocks/data endpoints do not prove equivalent editing | P1 |
 | G-012 | PKMEditor / validation | Cross-field validation and invalid-field navigation | PATCH/schema exist; equivalent to `PreparePKM`, `GetInvalidParentTab`, `IsNotValid` not proven | P0 |
@@ -101,7 +101,7 @@ These are confirmed reachable launch targets, not orphan candidates. For each on
 - Box operations: compare desktop clone-to-box, binary export, load/dump all boxes, import override choices, folder import, locked-slot skips, sorting, search, drag/drop and multi-view synchronization.
 - Slot context menu: trace every `ContextMenuSAV` command (open/edit/clone/delete/transfer/legality/file operations) against the browser slot context menu.
 - Save verification: add checksum diagnostics and whole-save stored-entity `BulkAnalysis` as separate operations; neither is a substitute for legality checks.
-- SAV4BR current slot: four-slot selection and active-save box/view refresh are implemented. BattlePass editor parity and explicit stale-subview invalidation remain open.
+- SAV4BR current slot: four-slot selection, active-save view refresh, transactional Battle Pass editor, and staged-editor invalidation on slot change/undo/redo are implemented on host. Battle Pass local CI is pending; full party-member control parity remains open.
 
 ## PKMEditor nested-window inventory
 
@@ -133,7 +133,7 @@ Main's child callbacks cross editor boundaries and must remain in the parity mat
 ## Implementation order
 
 1. **P0 correctness:** G-012 PKMEditor validation contract; G-001 Showdown editor-interaction/export-setting parity. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis are implemented and passed the complete local CI suite on 2026-11-17.
-2. **P1 core parity:** SAV4BR BattlePass editor and slot-dependent subview invalidation; save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
+2. **P1 core parity:** SAV4BR full party-member BattlePass controls; save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
 3. **P1 generation children:** implement typed route families, beginning with Hall of Fame/misc/RTC/roamer/secret base and Gen4–Gen9 specialist state. Group only where the underlying Core interface and field semantics genuinely match.
 4. **Nested editors:** PKM nested dialog equivalents and SAV Pokédex nested research/capture dialogs; define apply/cancel and undo unit boundaries.
 5. **Verification:** representative real save fixtures for each supported generation; targeted read-after-write, invalid-input, cancel, undo/redo, export byte-equivalence and capability-gating tests.
