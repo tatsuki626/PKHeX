@@ -5,7 +5,7 @@ PKHeX source baseline: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d`
 Host branch inspected: `experiment/upstream-winforms-web-port`  
 Scope: Main, SAVEditor, PKMEditor, their launchable child windows, and the nested SAV/PKM dialogs reached from those windows.
 
-This is a source-to-host static audit. A matching endpoint or panel is a **candidate**, not parity proof. No application code was changed and no CI/runtime tests were run in this audit.
+This is a source-to-host static audit. A matching endpoint or panel is a **candidate**, not parity proof. Follow-up hardening was committed on the host branch; its local CI verification is pending.
 
 ## Status vocabulary
 
@@ -19,7 +19,7 @@ This is a source-to-host static audit. A matching endpoint or panel is a **candi
 
 | Editor surface | Desktop scope | Browser counterpart found | Current assessment | Main gaps |
 |---|---|---|---|---|
-| Main | File/open/save/export, box operations, database, Showdown, QR, report, settings, legality, undo/redo | Save/file APIs, source browse/open, DB search, settings, history, box tools, legality; frontend Showdown/QR/report panels | **Partial** | Showdown routes referenced by JS are absent in Program.cs; QR payload/bitmap and report-grid semantics unverified; file semantics, unsaved guards and batch transaction need tests |
+| Main | File/open/save/export, box operations, database, Showdown, QR, report, settings, legality, undo/redo | Save/file APIs, source browse/open, DB search, settings, history, box tools, legality; Showdown routes in registered Phase13Tools module; QR/report panels | **Partial** | Showdown batch import/export exists; scope validation and configured-language export hardened, but current-PKM editor integration/settings and clipboard UX are not equivalent yet; QR payload/bitmap and report-grid semantics unverified; file semantics, unsaved guards and batch transaction need tests |
 | SAVEditor core | Box/party/extra slots, daycare, search/sort/pop-out, import/export, checksum and stored-entity verification | Boxes/party/battlebox/daycare, slot move, layout, box tools, export/import, trainer/inventory/mail/records/gifts/events/Pokédex | **Partial** | Checksum verification, BulkAnalysis, SAV4BR slot selector and daycare RNG seed missing; save pre-write cleanup and several slot/view behaviours unverified |
 | SAVEditor generation-specific children | 84 directly constructed forms plus two nested forms | Generic panels for trainer, inventory, gifts, events, mail, records, Pokédex and raids; some box/layout routes | **Mostly partial or missing** | Most specialist Gen1–Gen9 editors have no one-to-one panel/route identified; generic routes do not establish equivalent field coverage |
 | PKMEditor core | Format-aware fields, dependent controls, validation, helper actions, preview and legality | Schema GET/PATCH, action routes, legality; schema-driven tabs | **Partial** | Cross-field validation/focus, dependency refresh, generation-specific field semantics, move flags/PP, advanced metadata editability and format matrix |
@@ -29,7 +29,7 @@ This is a source-to-host static audit. A matching endpoint or panel is a **candi
 
 | ID | Surface | Gap | Evidence / current host state | Priority |
 |---|---|---|---|---|
-| G-001 | Main / Showdown | Import/export endpoint family | `app.js` builds slot/party/box/all export URLs and preview/apply requests; inspected `Program.cs` declares no Showdown routes | P0 |
+| G-001 | Main / Showdown | Desktop interaction and export-setting parity | Registered `Phase13Tools.Map` module already provides slot/party/box/all export plus preview/apply import; import is batch-to-empty-boxes, while desktop Main imports first set into the current PKM editor and exports editor PKM using configurable context settings/clipboard | P1 |
 | G-002 | Main / QR | End-to-end QR parity | QR panel exists, but inspected flow describes PK7 payload/text output rather than proving bitmap rendering, import and payload compatibility | P1 |
 | G-003 | Main / report | Report grid parity | No dedicated report-grid route found; save data alone does not prove desktop columns, extra properties, filters or export | P1 |
 | G-004 | Main / file lifecycle | OpenQuick and save semantics | Upload/download exist; standalone PKM save, multiple-file handling, unsaved PKM warning, export filename and browser close warning remain partial | P1 |
@@ -132,7 +132,7 @@ Main's child callbacks cross editor boundaries and must remain in the parity mat
 
 ## Implementation order
 
-1. **P0 correctness:** G-001 Showdown route family; G-012 PKMEditor validation contract. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis are implemented and passed the complete local CI suite on 2026-11-17.
+1. **P0 correctness:** G-012 PKMEditor validation contract; G-001 Showdown editor-interaction/export-setting parity. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis are implemented and passed the complete local CI suite on 2026-11-17.
 2. **P1 core parity:** SAV daycare RNG and SAV4BR slot; save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
 3. **P1 generation children:** implement typed route families, beginning with Hall of Fame/misc/RTC/roamer/secret base and Gen4–Gen9 specialist state. Group only where the underlying Core interface and field semantics genuinely match.
 4. **Nested editors:** PKM nested dialog equivalents and SAV Pokédex nested research/capture dialogs; define apply/cancel and undo unit boundaries.
