@@ -129,3 +129,8 @@ Created [`control-audit.csv`](control-audit.csv) from the desktop designer files
 | **Total** | **346** | **216** |
 
 This is a source inventory, not a web parity result. The next review must classify each control as functional, decorative/layout, conditional by save capability, or dynamically created; map functional controls and commands to the web UI/API; and inspect validation/state/persistence semantics in the implementation handlers. The designer regex captures explicit method-group event bindings; dynamically registered events and inherited controls need a separate source review.
+
+
+## First web counterpart mapping
+
+Created [`window-mapping.csv`](window-mapping.csv) with feature-level mappings for Main, SAVEditor and PKMEditor. The mappings identify the existing browser shell, save workspace and schema-driven Pokémon editor, plus their known API route families. These are candidate counterparts only: menu/control-level mapping, capability rules, validation, error/cancel behavior and parity tests remain to be checked. No duplicate screen should be created before that comparison.
