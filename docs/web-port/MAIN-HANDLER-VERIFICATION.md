@@ -74,3 +74,13 @@ No dedicated QR, Main report-grid, or trainer-encounter-database route was ident
 ## Status rule
 
 A frontend control or a matching route is only a candidate. Mark **implemented** only after tracing the full action from UI through validation and persistence, and adding a targeted test for the relevant behaviour.
+
+
+### Showdown backend hardening commits (2026-11-17)
+
+The registered host routes were hardened without creating duplicate endpoints:
+- host implementation: `b5d89958e870c171c459c06eb6abf1d718156b25`;
+- scope/language smoke coverage: `924385a386c1559c5f39e5cac4e94a3218b02242`;
+- import rejection and stale-preview coverage: `2ca650eef982ab781b4819f421eb0d03ca2bd374`.
+
+The new tests cover invalid export scopes, selected-slot export and bounds, party export route, configured French output, occupied destination, invalid Showdown input, out-of-range start slot and stale apply fingerprints. Local CI remains pending for these commits.
