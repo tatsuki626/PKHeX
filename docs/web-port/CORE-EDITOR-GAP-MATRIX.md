@@ -171,4 +171,4 @@ The host branch adds server-side checks to the schema PATCH path:
 - Errors identify the affected PP field and Moves tab.
 - Smoke tests cover empty-slot PP and over-maximum PP and verify rejection does not mutate the stored Pokémon.
 
-Host commits: `0285d33` (Program.cs), `eacffa0` (smoke tests). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Await maintainer local CI.
+Host commits: `0285d33` (Program.cs), `eacffa0` and `189e9e8` (smoke tests, including explicit before/after move/PP/PP Ups immutability checks). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Await maintainer local CI.
