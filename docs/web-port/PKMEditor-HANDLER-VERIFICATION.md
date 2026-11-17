@@ -99,3 +99,5 @@ CI follow-up: the first local run failed at compile time because the ability-nam
 
 
 Legacy-format follow-up (2026-11-17): the published 15:05 host CI report reached smoke test 1340, where the Generation 1 helper fixture failed while round-tripping `Version`. PK1/PK2 do not store origin-game metadata; their inherited property is `GameVersion.Invalid`, not a selectable saved game. Host fix `04983db` keeps `Version` visible but read-only for PKM formats below 3, and smoke commit `c71a430` asserts that capability. This preserves strict origin validation for formats that actually store a version. Full local CI is still pending; do not mark G-013/G-015 complete until a PASS report is published.
+
+Implementation refinement: host commit `3db7760` applies the format-3 origin-version gate after interface-property discovery, ensuring PK1/PK2 `Version` remains read-only even if an interface exposes a setter.
