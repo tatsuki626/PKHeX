@@ -94,3 +94,4 @@ The host adds `GET /saves/{id}/pokemon/{slotRef}/dependencies`, deriving:
 The browser refreshes the ability list when Species changes, and refreshes form/location options when Form or Version changes. Schema PATCH now accepts earlier origin generations for transferred Pokémon, rejects unsupported/future origin versions, validates explicit met/egg locations against the contextual PKHeX lists, and normalizes stale stored locations after an origin-only change. Basic editor saves now use schema PATCH so field/tab errors can focus the corresponding basic or format-specific control.
 
 Smoke tests cover the dependency response, invalid species and future origin versions, invalid met locations, and no mutation after rejection. Local CI is pending.
+Host implementation commits: Program.cs `2147c79`, `8c0d194`, `4d2708b`; browser `a40de15`, `a9307b7`, `5023e96`, `ae980a6`, `03313b0`, `e6a5598`; smoke tests `6f7d010`, `e9b3258`. Full local CI remains pending.
