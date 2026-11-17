@@ -172,3 +172,10 @@ The host branch adds server-side checks to the schema PATCH path:
 - Smoke tests cover empty-slot PP and over-maximum PP and verify rejection does not mutate the stored Pokémon.
 
 Host commits: `0285d33` (Program.cs), `eacffa0` and `189e9e8` (smoke tests, including explicit before/after move/PP/PP Ups immutability checks). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Complete local CI passed at `2026-11-17T10:45:41+04:00` on tested host commit `a0f2fb2942558cb1464ba44fd9dc147b2cc001af`; report: `reports/local-ci/pkhex-local-ci-20261117-104253-764111784.md`.
+
+
+### PKMEditor PID / Encryption Constant editing update (2026-11-17; host implementation, CI pending)
+
+The host adds an opt-in Identity schema tab (`advanced=true`) with editable unsigned 32-bit PID from format 3 and Encryption Constant from format 6. Fields are format-gated, and validation feedback targets the Identity tab. Smoke coverage exercises Generation 3 PID and Generation 6+ EC round trips and confirms the generation capability boundary.
+
+Existing PKHeX-native helper actions continue to provide correlation-aware PID rerolls, EC rerolls, nature synchronization and shiny generation. Raw PID/EC field edits deliberately set only the requested value, matching manual entry rather than invoking a helper that changes correlated values. Local CI is pending.
