@@ -65,6 +65,10 @@ The host has begun closing validation contract item 1:
 
 This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. The full local CI suite passed at `2026-11-17T10:45:41+04:00` on host commit `a0f2fb2942558cb1464ba44fd9dc147b2cc001af`.
 
+### Level/EXP order-independent validation refinement (2026-11-17; local CI pending)
+
+The schema PATCH validator now checks a supplied Level/EXP pair against the species growth curve before applying either value. This prevents JSON property order from silently deciding which value wins. Level bounds use PKHeX's `Experience.MinLevel` and `Experience.MaxLevel`; editing Level or EXP caps excess maximum-level EXP to the growth-curve threshold, matching the desktop editor's normal non-HaX behavior (the web editor has no HaX override). Smoke tests cover conflicting values in both JSON property orders and the maximum-level cap. Host commits: Program.cs `2fcd855`, smoke tests `c24508e`. This is a targeted correctness closure; invalid combo navigation, move learnability validation and broader per-format field constraints remain open.
+
 
 ## Move PP validation implementation update (2026-11-17; local CI verified at 10:45 +04:00)
 
