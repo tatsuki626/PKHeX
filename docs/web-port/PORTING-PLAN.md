@@ -89,13 +89,20 @@ For every source class, record what can be reused and what must be converted. No
 
 ## Delivery sequence
 
-1. Inspect repository projects, target frameworks, references, and the companion `pkhex-docker` host before deciding where the web host belongs.
-2. Inventory Forms, dialogs, launch points, controls, commands, and shared C# classes; record a reuse assessment for each.
-3. Establish the smallest shared application/service layer only where WinForms coupling prevents reuse.
-4. Build or adapt the ASP.NET shell, routing, session/save lifecycle, and reusable Razor controls around the reused PKHeX code.
-5. Port windows in dependency order, keeping one-to-one traceability in the manifest.
-6. Add behavior/parity tests alongside each window rather than postponing testing.
-7. Review every manifest row and verify both desktop regression and web parity before declaring completion.
+The ASP.NET host and substantial feature set already exist in `tatsuki626/pkhex-docker`; do not restart the hosting work or rewrite existing screens. The active work is a completeness audit followed by targeted gap closure.
+
+1. **Freeze the inventory baseline.** Record the exact PKHeX source commit and the web-host branch/commit being compared. Do not mix source revisions in one inventory.
+2. **Build the authoritative source inventory.** Enumerate all C# type declarations under `PKHeX.WinForms`, deduplicate partial classes, classify Forms/dialogs/UserControls/components/helpers by actual base type, and capture source paths.
+3. **Trace launch points and ownership.** Find menu/toolbar handlers, constructors, `Show`/`ShowDialog` calls, parent windows and other callers. Cross-check code-only forms and designer pairs.
+4. **Inspect each window.** Record tabs, meaningful controls, commands, validation, cancel/error paths, state transitions, save effects, Core operations and platform dependencies.
+5. **Map to the existing web host.** Link each source window to its exact existing route/page/modal/component or a concrete new task. Map reusable controls and shared logic. Mark each control/command as implemented, partial, missing, excluded or not applicable.
+6. **Prioritize gaps.** Fix correctness issues first, then missing operations in existing screens, then genuinely missing windows. Do not duplicate an existing counterpart.
+7. **Implement in small slices.** Reuse PKHeX.Core and platform-neutral C#; extract only the smallest shared logic where necessary. Update the inventory and add targeted tests with each slice.
+8. **Verify behavior and real saves.** Cover serialization, checksums, validation, cancel/no-op, undo/redo, audit, persistence and representative desktop/Core equivalence. Keep real user saves private.
+9. **Audit assets and platform boundaries.** Ensure no Windows-targeted WinForms/Drawing dependency leaks into the Linux host; verify sprites and previews.
+10. **Validate deployment and release.** Test a fresh Docker deployment, persistence, auth, database indexing, backups and restore; run full local CI at integration/release gates.
+
+The detailed execution checklist and exit criteria are maintained in `docs/plans/phase-17-completeness-audit.md` in the web-host repository. The machine-readable inventory is the source of truth for per-window status.
 
 ## Non-goals / safeguards
 
