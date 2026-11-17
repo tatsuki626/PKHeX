@@ -186,3 +186,4 @@ The host now exposes PKHeX-derived species/form/ability and origin-context met/e
 
 Smoke tests cover dependency results, invalid species and origin selection, invalid met-location rejection and no mutation on failure. Local CI is pending; retain G-013 and G-015 as in progress until the maintainer's complete local CI report passes and representative format/origin fixtures are verified.
 Host implementation commits: Program.cs `2147c79`, `8c0d194`, `4d2708b`; browser `a40de15`, `a9307b7`, `5023e96`, `ae980a6`, `03313b0`, `e6a5598`, `2295c15`; smoke tests `6f7d010`, `e9b3258`. Full local CI remains pending.
+CI follow-up: the first local run failed at compile time because the ability-name collection is `IReadOnlyList<string>`; host fix `74e9204` changes `.Length` to `.Count`. Report `pkhex-local-ci-20261117-140610-513710217.md` was confirmed on origin. Rerun local CI; no tests completed in the failed run.
