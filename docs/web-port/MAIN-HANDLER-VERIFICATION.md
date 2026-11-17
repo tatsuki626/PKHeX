@@ -1,17 +1,17 @@
 # Main window — handler-to-web verification
 
 Reference source baseline: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` (branch `web-port/form-inventory-and-parity`).
-Host inspected: `experiment/upstream-winforms-web-port`, current `Program.cs` and `wwwroot/js/app.js`.
+Host inspected: `experiment/upstream-winforms-web-port`, including `Program.cs`, `wwwroot/js/app.js`, and registered `Phase13Tools.cs`.
 Scope: Main menu/event handlers and their concrete browser/API counterparts. This is source inspection, not runtime verification.
 
 ## Findings that change the gap assessment
 
-The web frontend contains a Showdown panel and constructs links/requests for:
+The web frontend contains a Showdown panel and the registered `Phase13Tools.Map` module already implements:
 - `GET /api/saves/{id}/showdown/export?scope=slot|party|box|all`
 - `POST /api/saves/{id}/showdown/import/preview`
 - `POST /api/saves/{id}/showdown/import/apply`
 
-The inspected ASP.NET route declarations contain **none** of these paths. The panel is therefore not evidence of a working Showdown implementation. Treat all Showdown scopes as **partial / backend missing** until routes are implemented and exercised. The earlier feature-level candidate status was too optimistic.
+The earlier conclusion that these routes were absent was incorrect: the inspection searched only `Program.cs` and missed its module registration. The existing implementation delegates parsing/serialization to PKHeX.Core, previews multi-set imports into empty box slots, fingerprints the source save and import text, rechecks that fingerprint on apply, and persists the batch as one undoable save mutation. Follow-up hardening validates the export scope and uses the configured application language for exported sets. The remaining parity gap is interaction semantics: desktop Main imports the first set into the current PKM editor after confirmation and exports the current editor PKM using context-specific settings and clipboard verification; the browser's batch-to-box workflow is a different operation.
 
 Likewise, the Main desktop QR command calls QR import/export code in WinForms. The web app has a QR panel, but this pass has not yet proven payload parity, error handling, or a corresponding server operation. Keep it **partial / verification required**, not complete.
 
@@ -58,15 +58,15 @@ These are part of Main parity even though the initiating controls live inside SA
 
 ## Verified route inventory relevant to Main
 
-Present in inspected `Program.cs`: save upload/list/download/original, source browse/open, database status/search/reindex, settings GET/PUT, about, undo/redo/history, box exports/import, slot file downloads, legality endpoints, and Pokémon schema/edit/action endpoints.
+Present in inspected host modules: save upload/list/download/original, source browse/open, database status/search/reindex, settings GET/PUT, about, undo/redo/history, box exports/import, slot file downloads, legality endpoints, Pokémon schema/edit/action endpoints, and Showdown export/import in `Phase13Tools.cs` (registered by `Program.cs`).
 
-Not present in inspected `Program.cs`: any Showdown import/export route. No dedicated QR, Main report-grid, or trainer-encounter-database route was identified in this pass. Some frontend panels may perform local-only work; this requires separate end-to-end tracing rather than assuming the route must exist.
+No dedicated QR, Main report-grid, or trainer-encounter-database route was identified in this pass. Some frontend panels may perform local-only work; this requires separate end-to-end tracing rather than assuming the route must exist.
 
 ## Required follow-up tests
 
 1. Upload representative save and standalone PKM files; compare accepted types and error messages with `OpenQuick`.
 2. Edit a PKM without committing it, invoke standalone Save, then export the save; verify prompts and bytes.
-3. Exercise Showdown single/party/current-box/all scopes. First implement missing backend routes; assert preview/apply is explicit, only intended slots change, invalid lines are surfaced, and cancel is non-mutating.
+3. Exercise Showdown single/party/current-box/all scopes; assert preview/apply is explicit, only intended slots change, invalid lines and stale previews are rejected, and export language matches settings. Then implement the separate current-PKM editor import/export interaction parity.
 4. Exercise box dump/load with duplicates, empty slots and format conversion; compare counts and bytes.
 5. Compare report-grid properties and batch editor cancel/commit/undo behaviour.
 6. Test drag/drop and unsaved-close warning in supported browsers.
