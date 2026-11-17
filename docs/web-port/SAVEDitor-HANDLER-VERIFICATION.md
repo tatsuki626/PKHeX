@@ -20,8 +20,8 @@ This is static source tracing, not runtime parity certification.
 
 | Desktop operation | Web evidence | Result |
 |---|---|---|
-| `ClickVerifyCHK` — refuse checksum verification if save is edited; report valid checksums; optionally copy checksum details for invalid save | Save summary exposes `checksumsValid`; no dedicated checksum-verification or checksum-info endpoint found | **Missing** — add a read-only verification endpoint/UI with edited-save guard and diagnostic details |
-| `ClickVerifyStoredEntities` — `Core.Bulk.BulkAnalysis` over all stored entities; report clean or offer detailed localized report copy | Legality endpoints exist for individual Pokémon and box/save reports, but no equivalent stored-entity bulk-analysis operation was identified | **Missing / partial** — determine whether save legality endpoint is semantically equivalent; otherwise expose BulkAnalysis report with localization and tests |
+| `ClickVerifyCHK` — refuse checksum verification if save is edited; report valid checksums; optionally copy checksum details for invalid save | `GET /saves/{id}/verification/checksum`; browser Verify checksums control; durable `SaveEntry.HasBeenEdited` marker survives restart | **Implemented; local CI pending** — valid/invalid/edited states and invalid checksum details are exposed without mutating the save |
+| `ClickVerifyStoredEntities` — `Core.Bulk.BulkAnalysis` over all stored entities; report clean or offer detailed localized report copy | `GET /saves/{id}/verification/stored-entities` calls `PKHeX.Core.Bulk.BulkAnalysis`; browser Verify stored Pokémon control renders localized report and copy action | **Implemented; local CI pending** — includes box/party/other storage discovered by PKHeX.Core; separate from box-only legality report |
 | `UpdateSaveSlot` — SAV4BR slot switch, closes battle-pass editor, resets box names and reloads viewers | No battle-pass/current-save-slot selector or matching API route found | **Missing** — generation-specific multi-slot selection and dependent editor invalidation |
 | `UpdateStringSeed` / `SetDaycareSeed` — strict hexadecimal validation; supports 16/32/64/128-bit daycare RNG seeds; marks save edited | Daycare endpoint supports egg state and experience; no RNG seed field or write route found | **Missing** — expose capability-typed seed value and exact-width hex validation |
 
@@ -49,7 +49,7 @@ The browser has confirmed general routes/UI for trainer, inventory, Pokédex, gi
 
 ## Required implementation/verification order
 
-1. Implement checksum diagnostics and stored-entity bulk verification with targeted tests.
+1. Checksum diagnostics and stored-entity bulk verification are implemented on the host branch; run targeted local CI and verify clean/invalid/edited checksum cases plus representative cross-storage BulkAnalysis reports.
 2. Add multi-slot SAV4BR selection and daycare RNG seed editing, guarded by save capabilities.
 3. Compare box import/export and save export pre-write cleanup/validation.
 4. Map each generation-specific sub-editor to its existing web panel/API; record field-level omissions and modal semantics.
