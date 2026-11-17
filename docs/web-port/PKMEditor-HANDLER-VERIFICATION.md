@@ -64,3 +64,14 @@ The host has begun closing validation contract item 1:
 - Smoke tests cover these rejection paths and assert rejected requests leave the slot unchanged.
 
 This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. Local CI is pending.
+
+
+## Move PP validation implementation update (2026-11-17; CI pending)
+
+The host schema PATCH validator now:
+- Rejects PP or PP Ups on an empty move slot.
+- Rejects current PP above the move's context-specific base PP adjusted by PP Ups, using PKHeX.Core `MoveInfo.GetPP`.
+- Returns the offending PP/PP Ups field and identifies the Moves tab.
+- Includes smoke coverage for empty-slot PP and excessive PP, alongside the existing no-mutation-on-rejection check.
+
+Host commits: `0285d33` and `eacffa0`. This is a storage-integrity guard, not a full reproduction of WinForms `ValidateMove` / `LegalMoveSource`: legality coloring, deferred legal move lists, heal-on-selection, relearn move semantics and alpha/mastery handling remain open. Local CI is pending.
