@@ -63,10 +63,10 @@ The host has begun closing validation contract item 1:
 - Simultaneous Level and EXP changes must agree; Level-only changes continue to calculate EXP with the species growth curve.
 - Smoke tests cover these rejection paths and assert rejected requests leave the slot unchanged.
 
-This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. Local CI is pending.
+This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. The full local CI suite passed at `2026-11-17T10:45:41+04:00` on host commit `a0f2fb2942558cb1464ba44fd9dc147b2cc001af`.
 
 
-## Move PP validation implementation update (2026-11-17; CI pending)
+## Move PP validation implementation update (2026-11-17; local CI verified at 10:45 +04:00)
 
 The host schema PATCH validator now:
 - Rejects PP or PP Ups on an empty move slot.
