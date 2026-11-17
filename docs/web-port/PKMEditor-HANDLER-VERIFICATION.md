@@ -82,3 +82,15 @@ Host commits: `0285d33`, `eacffa0` and `189e9e8` (the latter adds explicit befor
 An opt-in Identity schema tab (`advanced=true`) now exposes raw PID editing for format 3+ and Encryption Constant editing for format 6+, both as unsigned 32-bit values. Unsupported fields are omitted by format. The error-tab map routes validation failures to Identity.
 
 This is distinct from helper actions: reroll PID, reroll EC, PID-by-nature and shiny generation continue to call PKHeX.Core methods that enforce their own correlation rules. Raw field editing writes only the selected field. Smoke tests cover PID/EC round trips and generation gating. Complete local CI passed at `2026-11-17T13:07:26+04:00` on tested host commit `db7cf271226029a7c47326ee0ca1d123d9a1a654`. A stale invalid-PID test value was updated to exercise UInt32 overflow rather than a now-valid editable PID. Report: `reports/local-ci/pkhex-local-ci-20261117-130437-200621630.md`.
+
+## Dependent choices and origin/location validation update (2026-11-17; host implementation, local CI pending)
+
+The host adds `GET /saves/{id}/pokemon/{slotRef}/dependencies`, deriving:
+- Form labels from PKHeX `FormConverter` for the selected species and context.
+- Ability IDs/names from the selected form's `IPersonalAbility` data, including the Gen5 Basculin form-specific Reckless option.
+- Origin-version options limited to supported versions no newer than the PKM format.
+- Met and egg location options from PKHeX's `GameInfo.GetLocationList` for the resolved origin version and PKM context.
+
+The browser refreshes the ability list when Species changes, and refreshes form/location options when Form or Version changes. Schema PATCH now accepts earlier origin generations for transferred Pokémon, rejects unsupported/future origin versions, validates explicit met/egg locations against the contextual PKHeX lists, and normalizes stale stored locations after an origin-only change. Basic editor saves now use schema PATCH so field/tab errors can focus the corresponding basic or format-specific control.
+
+Smoke tests cover the dependency response, invalid species and future origin versions, invalid met locations, and no mutation after rejection. Local CI is pending.
