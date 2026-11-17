@@ -133,7 +133,7 @@ Main's child callbacks cross editor boundaries and must remain in the parity mat
 ## Implementation order
 
 1. **P0 correctness:** G-012 PKMEditor validation contract; G-001 Showdown editor-interaction/export-setting parity. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis are implemented and passed the complete local CI suite on 2026-11-17.
-2. **P1 core parity:** SAV4BR full party-member BattlePass controls; save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
+2. **P1 core parity:** SAV4BR full party-member BattlePass controls (host basic + advanced-schema editor pushed; local CI pending; staged Showdown integration remains open); save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
 3. **P1 generation children:** implement typed route families, beginning with Hall of Fame/misc/RTC/roamer/secret base and Gen4–Gen9 specialist state. Group only where the underlying Core interface and field semantics genuinely match.
 4. **Nested editors:** PKM nested dialog equivalents and SAV Pokédex nested research/capture dialogs; define apply/cancel and undo unit boundaries.
 5. **Verification:** representative real save fixtures for each supported generation; targeted read-after-write, invalid-input, cancel, undo/redo, export byte-equivalence and capability-gating tests.
