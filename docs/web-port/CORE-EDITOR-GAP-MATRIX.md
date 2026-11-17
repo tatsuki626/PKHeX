@@ -42,7 +42,7 @@ This is a source-to-host static audit. A matching endpoint or panel is a **candi
 | G-011 | SAVEditor / generation children | Specialist save editors | Most child forms have no corresponding route or panel; generic save blocks/data endpoints do not prove equivalent editing | P1 |
 | G-012 | PKMEditor / validation | Cross-field validation and invalid-field navigation | PATCH/schema exist; equivalent to `PreparePKM`, `GetInvalidParentTab`, `IsNotValid` not proven | P0 |
 | G-013 | PKMEditor / dependencies | Species/form/origin/ability/location refresh | Schema option generation exists; dependent refresh and stale-value handling need tests | P1 |
-| G-014 | PKMEditor / moves | PP, relearn, alpha/mastery, move-shop and flags | Schema move fields/actions exist; detailed format-specific semantics unverified | P1 |
+| G-014 | PKMEditor / moves | PP, relearn, alpha/mastery, move-shop and flags | Schema move fields/actions exist; server PATCH now rejects PP on empty move slots and PP above context-specific base PP plus PP Ups. Relearn, alpha/mastery, move-shop, flags and legality coloring remain unverified | P1 |
 | G-015 | PKMEditor / format rules | PID/EC/shiny/gender/nature and met/egg invariants | Helper actions exist; generation-specific constraints and read-after-write tests needed | P1 |
 | G-016 | PKMEditor / advanced | Advanced metadata editability | Advanced schema is partly read-only; each field needs explicit editable/read-only classification | P1 |
 | G-017 | Nested editors | Commit/cancel isolation | Browser panels/actions do not yet demonstrate modal working-copy semantics across nested editors | P1 |
@@ -161,3 +161,14 @@ Static-audit limitation: each child form's own designer and implementation still
 ### PKMEditor validation implementation update (2026-11-17)
 
 G-012 is **in progress; local CI pending**. The first host slice adds field/tab-addressable PATCH errors, strict explicit Form validation, occupied-slot Species protection, deterministic Species-before-Form/Ability patch ordering, species-dependent form reset when omitted, and Level/EXP consistency checks. Regression tests cover invalid form/species, inconsistent Level/EXP and no mutation after rejection. Full cross-field coverage and browser focus-to-invalid-control remain open.
+
+
+### PKMEditor move PP validation implementation update (2026-11-17; local CI pending)
+
+The host branch adds server-side checks to the schema PATCH path:
+- Empty move slots must have zero PP and zero PP Ups.
+- Current PP must not exceed the selected move's context-specific base PP adjusted by the selected PP Ups, using `PKHeX.Core.MoveInfo.GetPP`.
+- Errors identify the affected PP field and Moves tab.
+- Smoke tests cover empty-slot PP and over-maximum PP and verify rejection does not mutate the stored Pokémon.
+
+Host commits: `0285d33` (Program.cs), `eacffa0` (smoke tests). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Await maintainer local CI.
