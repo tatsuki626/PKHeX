@@ -220,4 +220,4 @@ The copy, basic edit and schema PATCH paths all write only the encrypted BK4 sto
 
 ### PKMEditor Level/EXP validation refinement (2026-11-17; local CI pending)
 
-Host commits `2fcd855` and `c24508e` make supplied Level/EXP validation independent of JSON property order and cap over-maximum EXP to the level-100 growth-curve threshold. Tests cover conflicting pairs in both field orders and over-cap EXP. This is a targeted correctness improvement; G-012 remains open for desktop-equivalent incomplete combo validation/focus and additional format-specific constraints.
+Host commits `2fcd855` / `8b08737` and `c24508e` make supplied Level/EXP validation independent of JSON property order, evaluate the final species' growth curve after Species changes, and cap over-maximum EXP to the level-100 growth-curve threshold. Tests cover conflicting pairs in both field orders and over-cap EXP. This is a targeted correctness improvement; G-012 remains open for desktop-equivalent incomplete combo validation/focus and additional format-specific constraints.
