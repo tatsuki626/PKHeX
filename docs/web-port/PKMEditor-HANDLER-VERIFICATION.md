@@ -52,3 +52,15 @@ The frontend `renderSchema()` builds tabs and controls from returned schema meta
 - Nested editor changes must persist only on explicit apply and cancel without mutation.
 
 Status rule: schema presence or an action name alone is not parity. Require a field mapping, format-specific behaviour and read-after-write test.
+
+
+## Validation implementation update (2026-11-17; CI pending)
+
+The host has begun closing validation contract item 1:
+- PATCH validation errors include `field` and `tab` metadata, preserved by the browser API client and displayed in the editor error message.
+- Explicit invalid forms and attempts to clear species in an occupied slot are rejected rather than silently normalized.
+- Species is applied before Form/Ability so dependent validation is independent of JSON property order. If a species change invalidates the previous form and no new Form was supplied, the form resets to zero.
+- Simultaneous Level and EXP changes must agree; Level-only changes continue to calculate EXP with the species growth curve.
+- Smoke tests cover these rejection paths and assert rejected requests leave the slot unchanged.
+
+This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. Local CI is pending.
