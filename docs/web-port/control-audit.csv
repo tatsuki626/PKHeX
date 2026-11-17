@@ -1,6 +1,6 @@
-# Initial control inventory
+# Designer control inventory
 
-Source baseline: `tatsuki626/PKHeX` master at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d`. This first control-level pass covers the three shared composition/editor surfaces. It enumerates designer fields and explicit event bindings; controls are not yet individually mapped or parity-tested. Non-field controls created dynamically in code and inherited controls must be reviewed separately.
+Source baseline: `tatsuki626/PKHeX` master at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d`. This file is the original mechanical inventory of designer fields and explicit event bindings for Main, SAVEditor and PKMEditor. Semantic per-control mapping is maintained in `control-mapping-detail.csv`; handler and workflow analysis is in `CORE-CONTROL-MAPPING.md`. Non-field controls created dynamically in code and inherited controls must still be reviewed separately.
 
 SourceCommit,WindowClass,ImplementationPath,DesignerPath,ControlName,ControlType,EventBindings,WebCounterpart,Status
 "9a1a8f4a450996e9572ee4428e9ae709166c2c6d","Main","PKHeX.WinForms/MainWindow/Main.cs","PKHeX.WinForms/MainWindow/Main.Designer.cs","C_SAV","Controls.SAVEditor","RequestCloneData→ClickClone; RequestReloadSave→ClickSaveFileName","Existing web app shell; detailed menu/action mapping pending","Source control enumerated; parity mapping pending"
