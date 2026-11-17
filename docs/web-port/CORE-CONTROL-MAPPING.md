@@ -41,17 +41,17 @@
 
 | Control / handler | Desktop behaviour | Web mapping | Assessment |
 |---|---|---|---|
-| `Menu_ShowdownImportPKM` → `ClickShowdownImportPKM` | Import Showdown text into editor | Existing Showdown-related frontend capability must be checked against this exact single-PKM flow | Unverified; do not assume batch import is equivalent. |
-| `Menu_ShowdownExportPKM` → `ClickShowdownExportPKM` | Export current Pokémon as Showdown text | Existing Showdown feature candidate | Unverified for current Pokémon and clipboard/text output semantics. |
-| `Menu_ShowdownExportParty` → `ClickShowdownExportParty` | Export party | Existing party view and Showdown candidate | Unverified. |
-| `Menu_ShowdownExportCurrentBox` → `ClickShowdownExportCurrentBox` | Export current box | Existing box grid and Showdown candidate | Unverified. |
+| `Menu_ShowdownImportPKM` → `ClickShowdownImportPKM` | Import Showdown text into editor | Existing Showdown-related frontend capability must be checked against this exact single-PKM flow | Existing Phase 13 Showdown feature; verify this exact current-PKM import flow and invalid-set handling. |
+| `Menu_ShowdownExportPKM` → `ClickShowdownExportPKM` | Export current Pokémon as Showdown text | Existing Showdown feature candidate | Existing Phase 13 Showdown feature; verify current-PKM export and browser copy/download semantics. |
+| `Menu_ShowdownExportParty` → `ClickShowdownExportParty` | Export party | Existing party view and Showdown candidate | Existing Phase 13 Showdown feature; verify party scope, order and output formatting. |
+| `Menu_ShowdownExportCurrentBox` → `ClickShowdownExportCurrentBox` | Export current box | Existing box grid and Showdown candidate | Existing Phase 13 Showdown feature; verify current-box scope, empty slots and output formatting. |
 | `Menu_LoadBoxes` → `MainMenuBoxLoad` | Load/import box data | Box import endpoint and box ZIP import UI | Candidate. Verify supported legacy formats and replacement/merge semantics. |
 | `Menu_DumpBoxes` → `MainMenuBoxDump` | Export all boxes | `GET /api/saves/{id}/boxes/export` | Candidate. Verify format and complete box coverage. |
 | `Menu_DumpBox` → `MainMenuBoxDumpSingle` | Export current box | `GET /api/saves/{id}/boxes/{box}/export` | Candidate. |
-| `Menu_Report` → `MainMenuBoxReport` | Opens `ReportGrid`, populates slot cache and configured extra/hidden properties | No equivalent report-grid panel/API identified in inspected frontend/API inventory | Unmapped. Requires dedicated report view and configurable columns/filters. |
+| `Menu_Report` → `MainMenuBoxReport` | Opens `ReportGrid`, populates slot cache and configured extra/hidden properties | Existing Phase 13 report-grid/report workflow is listed in the web roadmap; exact column configuration, filters and export parity still need checking | Candidate. Verify report data columns, configured extra/hidden properties, sorting/filtering and export. |
 | `Menu_Database` → `MainMenuDatabase` | Opens Pokémon database browser | `/api/db/status`, `/api/db/search`, `/api/db/reindex` and database panel | Candidate. Verify filters, preview, import-to-save and database source handling. |
 | `Menu_MGDatabase` → `MainMenuMysteryDB` | Opens Mystery Gift database | `/api/gifts/db` and gift import routes | Candidate. Verify browse/search, gift preview and import. |
-| `Menu_EncDatabase` → `Menu_EncDatabase_Click` | Opens encounter database | No exact encounter-browser counterpart established by this pass | Unmapped pending search of web UI and source workflow. |
+| `Menu_EncDatabase` → `Menu_EncDatabase_Click` | Opens encounter database | Phase 13 includes an encounter database; verify the dedicated encounter browser, filtering and encounter-to-editor handoff | Candidate. Verify exact encounter search/filter behavior and encounter-to-editor handoff. |
 | `Menu_BatchEditor` → `MainMenuBatchEditor` | Opens batch editor | Box-tools preview/apply and bulk operations exist | Partial. Verify full batch field/action coverage, filters, preview and commit/cancel. |
 | `Menu_Folder` → `MainMenuFolder` | Opens folder/file list workflow | Source browse/open and save browser | Partial. Verify recursive browsing, file-type filters and multi-file operations. |
 
@@ -112,7 +112,7 @@ The following buttons are functional commands, not decorative controls. Their Wi
 | `B_OpenRTCEditor` → `B_OpenRTCEditor_Click` | RTC/clock editor | Gen 3 RTC feature candidate — verify exact controls and save mutation |
 | `B_OpenRaids`, `B_Raids`, `B_RaidsDLC1`, `B_RaidsDLC2`, `B_RaidsSevenStar` → `B_OpenRaids_Click` | Raid editor variants | No exact raid editor mapping confirmed in this audit — unmapped pending capability review |
 | `B_OpenBattlePass` → `B_OpenBattlePass_Click` | Battle Pass editor | Gen 4 Battle Pass feature candidate |
-| `B_Blocks` → `B_Blocks_Click` | Block data editor | No exact counterpart confirmed — unmapped |
+| `B_Blocks` → `B_Blocks_Click` | Block data editor | Phase 15 includes a block editor; verify the exact save-block editing workflow and format coverage |
 | `B_OtherSlots` → `B_OtherSlots_Click` | Additional slot groups | Extra slots/game-extras candidate — partial |
 | `B_OpenFashion` → `B_OpenFashion_Click` | Fashion editor | Gen-specific game-extras candidate — verify exact save formats |
 | `B_Donuts` → `B_Donuts_Click` | Donut editor | Gen 9 game-extras candidate — verify |
@@ -128,7 +128,7 @@ The following buttons are functional commands, not decorative controls. Their Wi
 | `B_OpenPokeblocks` → `B_OpenPokeblocks_Click` | Pokéblock editor | Gen 3 Pokéblock feature candidate — verify |
 | `B_OpenSecretBase` → `B_OpenSecretBase_Click` | Secret Base editor | Gen 3 Secret Base feature candidate — verify |
 | `B_Roamer` → `B_Roamer_Click` | Roamer editor | Gen 3 roamer feature candidate — verify |
-| `B_OpenFriendSafari` → `B_OpenFriendSafari_Click` | Friend Safari editor | No exact web counterpart verified — unmapped |
+| `B_OpenFriendSafari` → `B_OpenFriendSafari_Click` | Friend Safari editor | Phase 14 has generation-specific editors; exact control-to-feature mapping remains unverified |
 | `B_OpenChatterEditor` → `B_OpenChatterEditor_Click` | Chatter editor | No exact web counterpart verified — unmapped |
 | `B_OpenMedalsEditor` → `B_OpenMedalsEditor_Click` | Medals editor | Pokémon medal editor exists as nested editor; save medals workflow still needs verification |
 | `B_OpenOPowers` → `B_OpenOPowers_Click` | O-Power editor | No exact web counterpart verified — unmapped |
@@ -150,9 +150,9 @@ The following buttons are functional commands, not decorative controls. Their Wi
 | `B_SaveBoxBin` → `B_SaveBoxBin_Click` | Export PC box binary | Box export endpoint candidate; verify exact binary format and naming |
 | `B_VerifyCHK` → `ClickVerifyCHK` | Verify/fix save checksum | No dedicated checksum verification action identified — unmapped |
 | `B_VerifySaveEntities` → `ClickVerifyStoredEntities` | Validate stored entities in save | No equivalent whole-save entity audit identified — unmapped |
-| `B_ConvertKorean` → `B_ConvertKorean_Click` | Korean save conversion | No equivalent conversion workflow identified — unmapped |
+| `B_ConvertKorean` → `B_ConvertKorean_Click` | Korean save conversion | No equivalent conversion workflow confirmed — likely gap; inspect whether any format conversion utility covers this exact operation |
 | `B_SearchBox` → `B_SearchBox_Click` | Search/filter current box | `/api/saves/{id}/search` and frontend search — candidate |
-| `B_PopoutBox`, `Menu_PopoutBoxSingle`, `Menu_PopoutBoxAll` | Pop out one/all box viewers | No separate pop-out browser view verified — unmapped |
+| `B_PopoutBox`, `Menu_PopoutBoxSingle`, `Menu_PopoutBoxAll` | Pop out one/all box viewers | No separate pop-out browser view verified; likely a desktop-only layout affordance unless a useful multi-window browser equivalent is required |
 | `Menu_ExportBAK` → `Menu_ExportBAK_Click` | Export backup | Backup creation/download workflow — candidate |
 | `CB_SaveSlot` → `UpdateSaveSlot` | Select save slot where format supports multiple slots | No equivalent selection interaction verified — unmapped pending save capability review |
 | `tabBoxMulti` → `ClickBoxSort` | Box tab click/sort interaction | Browser box navigation and sorting; exact sort parity unverified |
