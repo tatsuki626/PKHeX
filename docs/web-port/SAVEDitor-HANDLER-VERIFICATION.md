@@ -35,10 +35,10 @@ The host now mirrors this behaviour:
 - stores the selected daycare group per open save and resets it to group 0 when the user opens a different save;
 - exposes a cyclic switch control only for saves with multiple groups;
 - requires confirmation before changing the selected group; cancel preserves the current group;
-- renders only the selected group's slots, experience and RNG seed, instead of showing all groups simultaneously;
+- renders only the selected group's slots, experience, egg state and RNG seed, instead of showing all groups simultaneously;
 - retains group-indexed upload/delete/seed APIs; switching is view state and does not create a save mutation or undo entry.
 
-The ORAS `SAV6AO` fixture is the concrete two-group case (`DaycareCount == 2`). Smoke coverage checks groups 0 and 1, invalid group rejection, and the browser confirmation/selected-group contract.
+The ORAS `SAV6AO` fixture is the concrete two-group case (`DaycareCount == 2`). Smoke coverage checks groups 0 and 1, per-group egg-state isolation, 64-bit seed and experience capability, invalid group rejection, and the browser confirmation/selected-group contract.
 
 **Result: implemented on host; local CI pending.**
 
