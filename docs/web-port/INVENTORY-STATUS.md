@@ -78,9 +78,9 @@ A window cannot be marked parity-verified while any meaningful control or comman
 | Generate complete type/declaration inventory | In progress: all 158 designer-paired implementation declarations inspected; 114 Forms and 44 UserControls recorded in provisional `inventory.csv`; code-only classes also scanned |
 | Classify Forms, dialogs, UserControls and components | In progress: all 158 designer-paired declarations classified; 52 code-only files scanned for additional window declarations; linked helper/component inventory still being expanded |
 | Trace every Form launch point and owning window | In progress: launch sites traced for 114/114 Forms; `ErrorWindow` and `SAV_Capture7GG` are both confirmed reachable |
-| Enumerate meaningful controls, commands and validation | Not started |
+| Enumerate meaningful controls, commands and validation | In progress: detailed semantic mapping started for Main, SAVEditor and PKMEditor; see [CORE-CONTROL-MAPPING.md](CORE-CONTROL-MAPPING.md) |
 | Assess source reuse and Windows-only dependencies per type | Partial: initial reuse treatment recorded; dependency-level review pending |
-| Map each Form to existing/new web counterpart | Not started |
+| Map each Form to existing/new web counterpart | In progress: exact candidate web route/component mappings and probable gaps documented for Main, SAVEditor and PKMEditor |
 | Prioritize and implement identified parity gaps | Pending inventory |
 | Expand real-save and desktop-equivalence coverage | In progress |
 | Audit web graphics/assets and Linux dependency boundaries | Pending |
@@ -145,3 +145,4 @@ Created [`window-mapping.csv`](window-mapping.csv) with feature-level mappings f
 
 - The earlier absence finding was caused by searching only direct launchers in `Main.cs` and `SAVEditor.cs`. The actual dialog is launched one level deeper from `SAV_PokedexGG`; this demonstrates why nested Form ownership must be traced recursively rather than inferred from top-level menu dispatch alone.
 - **Result: 0 confirmed orphan Forms among the two candidates checked.** Both are reachable and remain in the parity scope. All 114 Forms now have a traced launch/owner path in the first-pass inventory; this does not mean their web parity has been audited.
+\n\n## Detailed central-surface control mapping (2026-11-17)\n\n- Created [CORE-CONTROL-MAPPING.md](CORE-CONTROL-MAPPING.md) with semantic maps for Main, SAVEditor and PKMEditor: menus, tabs, functional controls, event/handler families, web route/component candidates, format/capability rules and probable gaps.\n- This is an evidence-backed working map, not parity sign-off. It distinguishes candidate counterparts from verified behavior and records where exact endpoint/handler/test comparison remains outstanding.\n- Main covers global file/tools/options commands, legality, drag/drop and editor event wiring. SAVEditor covers box/party/daycare/extra slots, save tools, generation-specific editor launchers and runtime slot/search/undo interactions. PKMEditor covers six editor tabs, dependent fields, validation, format gates, helper actions and nested editors.\n- Next: inspect exact web UI/endpoint implementation for each high-risk candidate and mark each control/command implemented, partial, missing, excluded or not applicable only when evidence supports it.\n
