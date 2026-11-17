@@ -31,7 +31,7 @@ Before creating projects or moving files, inspect the actual project references,
 - Repository: `tatsuki626/PKHeX`
 - Source project: `PKHeX.WinForms`
 - Domain project: `PKHeX.Core`
-- Inventory baseline: `master` at the time this plan was created.
+- Inventory baseline: `master` commit `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` (2026-11-17 audit baseline).
 - Initial tree scan found 369 C# source files under `PKHeX.WinForms`. This is a source-file count, **not** a count of windows. The authoritative window count must come from inspecting class declarations and designer files, not guessing from filenames.
 
 ## Required inventory
