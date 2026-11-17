@@ -54,7 +54,7 @@ The browser has confirmed general routes/UI for trainer, inventory, Pokédex, gi
 ## Required implementation/verification order
 
 1. Checksum diagnostics and stored-entity bulk verification are implemented and passed the complete local CI suite on 2026-11-17. The CI suite covers valid/invalid/edited checksum response paths and stored-entity BulkAnalysis response shape; retain representative real-save report comparison as follow-up parity evidence.
-2. SAV4BR four-slot selection and typed daycare RNG seed editing passed the complete local CI suite on 2026-11-17. Remaining SAV4BR work is BattlePass editor parity and explicit dependent-view invalidation. Multi-group daycare switching/confirmation passed complete local CI on 2026-11-17.
+2. SAV4BR four-slot selection, typed daycare RNG seed editing, and multi-group daycare switching/confirmation passed complete local CI on 2026-11-17. Transactional Battle Pass editing and staged-view invalidation are now implemented on the host; that slice awaits local CI. Full per-Pokémon Battle Pass controls remain a parity follow-up.
 3. Compare box import/export and save export pre-write cleanup/validation.
 4. Map each generation-specific sub-editor to its existing web panel/API; record field-level omissions and modal semantics.
 5. Test cancel vs commit, undo/redo, save reload and checksum state for every mutating workflow.
