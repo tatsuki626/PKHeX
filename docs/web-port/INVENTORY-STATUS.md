@@ -10,8 +10,9 @@ PKHeX.Core source pin used by the web host: `3767c1367aeee2db93c2023d9938e9334e9
 The current recursive source-tree scan of desktop `master` at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` found:
 
 - 369 C# source files under `PKHeX.WinForms/`
-- 159 WinForms designer partial files (`*.Designer.cs`)
-- 210 other C# files under the project
+- 159 files named `*.Designer.cs`; 158 have matching implementation files, while `Properties/Resources.Designer.cs` is generated resources rather than a window designer
+- 158 designer/implementation pairs
+- 52 code-only C# files without a matching designer pair
 
 These are file counts, not counts of Forms or dialogs. Partial declarations must be deduplicated by fully qualified type; UserControls and components must not be counted as windows.
 
@@ -74,9 +75,9 @@ A window cannot be marked parity-verified while any meaningful control or comman
 | Update delivery sequence for inventory-first completion | Complete |
 | Record Phase 17 audit, parity and release workstreams in web roadmap | Complete |
 | Freeze exact desktop inventory commit | Complete: `9a1a8f4a450996e9572ee4428e9ae709166c2c6d` |
-| Generate complete type/declaration inventory | In progress: provisional `inventory.csv` contains 113 inspected Form declarations and 42 inspected UserControl declarations; not exhaustive |
-| Classify Forms, dialogs, UserControls and components | In progress: first 155 declaration rows classified; remaining source files and code-only types pending |
-| Trace every Form launch point and owning window | In progress: 11 Main.cs launch points verified; all other owners/callers pending |
+| Generate complete type/declaration inventory | In progress: all 158 designer-paired implementation declarations inspected; 114 Forms and 44 UserControls recorded in provisional `inventory.csv`; code-only classes also scanned |
+| Classify Forms, dialogs, UserControls and components | In progress: all 158 designer-paired declarations classified; 52 code-only files scanned for additional window declarations; linked helper/component inventory still being expanded |
+| Trace every Form launch point and owning window | In progress: 11 Main.cs launch points verified; launch/owner tracing for the remaining Forms pending |
 | Enumerate meaningful controls, commands and validation | Not started |
 | Assess source reuse and Windows-only dependencies per type | Partial: initial reuse treatment recorded; dependency-level review pending |
 | Map each Form to existing/new web counterpart | Not started |
@@ -105,8 +106,9 @@ Do not start implementing new screens until the inventory and existing-web mappi
 ## First inventory pass (2026-11-17)
 
 - Frozen desktop baseline: `master` at `9a1a8f4a450996e9572ee4428e9ae709166c2c6d`.
-- Recursive tree: 369 C# files, 159 designer files; 12171 total tree entries.
-- Created [`inventory.csv`](inventory.csv), a provisional seed with 113 directly inspected Form declarations and 42 directly inspected UserControl declarations. This is not the final Form count; other source files, code-only windows and designer partials remain to be classified.
+- Recursive tree: 369 C# files, 159 designer files and 12,171 total tree entries. There are 158 designer/implementation pairs; the remaining designer file is generated resources.
+- All 158 paired implementation files were inspected and classified by their primary declaration: 114 Forms and 44 UserControls. The 52 code-only files were also scanned; no additional Form declaration was found. This is the complete first-pass Form/UserControl classification for this exact source commit, subject to a launch-site cross-check.
+- Created [`inventory.csv`](inventory.csv) with 158 Form/UserControl rows. It remains provisional because most launch points, owning windows, control details, shared helper relationships and web counterpart mappings are still pending.
 - Verified main-window launch sites in `Main.cs` for About, ReportGrid, KChart, SAV_Database, SAV_Encounters, SAV_MysteryGiftDB, SettingsEditor, BoxExporter, BatchEditor, SAV_FolderList and QR.
-- Examples of important classification findings: `PKMEditor`, `BoxEditor`, `PartyEditor` and `SAVEditor` are UserControls, not independent Forms; `PokePreview`, `BallBrowser` and `StatusBrowser` are Forms despite residing under Controls; several Gen 4 Pokeathlon/Safari and Gen 5 Join Avenue classes are UserControls nested within larger editor workflows.
+- Important classification findings: `PKMEditor`, `BoxEditor`, `PartyEditor` and `SAVEditor` are UserControls, not independent Forms; `PokePreview`, `BallBrowser` and `StatusBrowser` are Forms despite residing under Controls; several Gen 4 Pokeathlon/Safari and Gen 5 Join Avenue classes are UserControls nested within larger editor workflows.
 - The CSV intentionally marks exact web counterpart mapping, control-level parity and full launch ownership as pending. No parity completion claim is made from this seed.
