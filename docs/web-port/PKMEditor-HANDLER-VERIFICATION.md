@@ -75,3 +75,10 @@ The host schema PATCH validator now:
 - Includes smoke coverage for empty-slot PP and excessive PP, alongside the existing no-mutation-on-rejection check.
 
 Host commits: `0285d33`, `eacffa0` and `189e9e8` (the latter adds explicit before/after move/PP/PP Ups immutability checks). This is a storage-integrity guard, not a full reproduction of WinForms `ValidateMove` / `LegalMoveSource`: legality coloring, deferred legal move lists, heal-on-selection, relearn move semantics and alpha/mastery handling remain open. Local CI is pending.
+
+
+## PID / Encryption Constant editing update (2026-11-17; host implementation, CI pending)
+
+An opt-in Identity schema tab (`advanced=true`) now exposes raw PID editing for format 3+ and Encryption Constant editing for format 6+, both as unsigned 32-bit values. Unsupported fields are omitted by format. The error-tab map routes validation failures to Identity.
+
+This is distinct from helper actions: reroll PID, reroll EC, PID-by-nature and shiny generation continue to call PKHeX.Core methods that enforce their own correlation rules. Raw field editing writes only the selected field. Smoke tests cover PID/EC round trips and generation gating. Local CI is pending.
