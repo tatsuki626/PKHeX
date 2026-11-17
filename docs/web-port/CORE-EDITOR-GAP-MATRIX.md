@@ -34,8 +34,8 @@ This is a source-to-host static audit. A matching endpoint or panel is a **candi
 | G-003 | Main / report | Report grid parity | No dedicated report-grid route found; save data alone does not prove desktop columns, extra properties, filters or export | P1 |
 | G-004 | Main / file lifecycle | OpenQuick and save semantics | Upload/download exist; standalone PKM save, multiple-file handling, unsaved PKM warning, export filename and browser close warning remain partial | P1 |
 | G-005 | Main / batch | Transaction semantics | Box-tools preview/apply exists; desktop BatchEditor only commits on OK. Cancel, partial validation and undo integration need proof | P1 |
-| G-006 | SAVEditor / checksum | Dedicated checksum verification | Implemented in host as GET `/saves/{id}/verification/checksum` with durable edited-state guard and `SaveFile.ChecksumInfo` diagnostics; browser exposes verify/copy workflow | **Implemented; local CI pending** |
-| G-007 | SAVEditor / entity audit | Whole-save stored-entity analysis | Implemented in host as GET `/saves/{id}/verification/stored-entities` using `PKHeX.Core.Bulk.BulkAnalysis`, localized report, entity/finding/clone counts; browser exposes report/copy workflow | **Implemented; local CI pending** |
+| G-006 | SAVEditor / checksum | Dedicated checksum verification | Implemented in host as GET `/saves/{id}/verification/checksum` with durable edited-state guard and `SaveFile.ChecksumInfo` diagnostics; browser exposes verify/copy workflow | **Implemented; local CI passed (2026-11-17)** |
+| G-007 | SAVEditor / entity audit | Whole-save stored-entity analysis | Implemented in host as GET `/saves/{id}/verification/stored-entities` using `PKHeX.Core.Bulk.BulkAnalysis`, localized report, entity/finding/clone counts; browser exposes report/copy workflow | **Implemented; local CI passed (2026-11-17)** |
 | G-008 | SAVEditor / daycare | RNG seed editing | Daycare state route covers experience/egg state; no typed UInt16/32/64/128 seed field or write route | P1 |
 | G-009 | SAVEditor / SAV4BR | Current save-slot selection | No selector/route found; desktop closes BattlePass and resets box names/viewers on switch | P1 |
 | G-010 | SAVEditor / save export | Pre-write validation/cleanup | Download route exists; desktop `ValidateChildren()` and `IStorageCleanup.FixStoragePreWrite()` semantics are not established | P1 |
@@ -132,7 +132,7 @@ Main's child callbacks cross editor boundaries and must remain in the parity mat
 
 ## Implementation order
 
-1. **P0 correctness:** G-001 Showdown route family; G-012 PKMEditor validation contract. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis have implementation committed and await local CI.
+1. **P0 correctness:** G-001 Showdown route family; G-012 PKMEditor validation contract. G-006 checksum diagnostics and G-007 stored-entity BulkAnalysis are implemented and passed the complete local CI suite on 2026-11-17.
 2. **P1 core parity:** SAV daycare RNG and SAV4BR slot; save pre-write cleanup; PKM dependent-field/move/format tests; Main QR/report/file lifecycle.
 3. **P1 generation children:** implement typed route families, beginning with Hall of Fame/misc/RTC/roamer/secret base and Gen4–Gen9 specialist state. Group only where the underlying Core interface and field semantics genuinely match.
 4. **Nested editors:** PKM nested dialog equivalents and SAV Pokédex nested research/capture dialogs; define apply/cancel and undo unit boundaries.
