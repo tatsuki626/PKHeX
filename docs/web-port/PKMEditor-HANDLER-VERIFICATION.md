@@ -74,4 +74,4 @@ The host schema PATCH validator now:
 - Returns the offending PP/PP Ups field and identifies the Moves tab.
 - Includes smoke coverage for empty-slot PP and excessive PP, alongside the existing no-mutation-on-rejection check.
 
-Host commits: `0285d33` and `eacffa0`. This is a storage-integrity guard, not a full reproduction of WinForms `ValidateMove` / `LegalMoveSource`: legality coloring, deferred legal move lists, heal-on-selection, relearn move semantics and alpha/mastery handling remain open. Local CI is pending.
+Host commits: `0285d33`, `eacffa0` and `189e9e8` (the latter adds explicit before/after move/PP/PP Ups immutability checks). This is a storage-integrity guard, not a full reproduction of WinForms `ValidateMove` / `LegalMoveSource`: legality coloring, deferred legal move lists, heal-on-selection, relearn move semantics and alpha/mastery handling remain open. Local CI is pending.
