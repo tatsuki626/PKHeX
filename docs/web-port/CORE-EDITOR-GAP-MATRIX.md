@@ -156,3 +156,8 @@ Static-audit limitation: each child form's own designer and implementation still
 - Main current-PKM Showdown preview/apply/export: **local CI verified**. The active-editor endpoints, draft-aware UI, schema-field filtering, stale-preview protection, no-mutation export, and undoable apply passed the complete local CI suite at `2026-11-17T10:08:56+04:00`.
 - Remaining limitation: web settings do not yet expose the desktop's custom per-context Showdown export preferences. Treat this as a parity follow-up, not a CI blocker.
 - Main QR, report-grid and encounter-trainer-database flows remain partial pending end-to-end tracing. PKMEditor cross-field/dependent-field validation remains a high-priority gap.
+
+
+### PKMEditor validation implementation update (2026-11-17)
+
+G-012 is **in progress; local CI pending**. The first host slice adds field/tab-addressable PATCH errors, strict explicit Form validation, occupied-slot Species protection, deterministic Species-before-Form/Ability patch ordering, species-dependent form reset when omitted, and Level/EXP consistency checks. Regression tests cover invalid form/species, inconsistent Level/EXP and no mutation after rejection. Full cross-field coverage and browser focus-to-invalid-control remain open.
