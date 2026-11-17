@@ -163,7 +163,7 @@ Static-audit limitation: each child form's own designer and implementation still
 G-012 is **in progress; local CI pending**. The first host slice adds field/tab-addressable PATCH errors, strict explicit Form validation, occupied-slot Species protection, deterministic Species-before-Form/Ability patch ordering, species-dependent form reset when omitted, and Level/EXP consistency checks. Regression tests cover invalid form/species, inconsistent Level/EXP and no mutation after rejection. Full cross-field coverage and browser focus-to-invalid-control remain open.
 
 
-### PKMEditor move PP validation implementation update (2026-11-17; local CI pending)
+### PKMEditor move PP validation implementation update (2026-11-17; local CI verified at 10:45 +04:00)
 
 The host branch adds server-side checks to the schema PATCH path:
 - Empty move slots must have zero PP and zero PP Ups.
@@ -171,4 +171,4 @@ The host branch adds server-side checks to the schema PATCH path:
 - Errors identify the affected PP field and Moves tab.
 - Smoke tests cover empty-slot PP and over-maximum PP and verify rejection does not mutate the stored Pokémon.
 
-Host commits: `0285d33` (Program.cs), `eacffa0` and `189e9e8` (smoke tests, including explicit before/after move/PP/PP Ups immutability checks). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Await maintainer local CI.
+Host commits: `0285d33` (Program.cs), `eacffa0` and `189e9e8` (smoke tests, including explicit before/after move/PP/PP Ups immutability checks). This closes only the basic stored-PP integrity check; it does not implement desktop move-list learnability coloring, move auto-healing on selection, relearn semantics, or alpha/mastery/shop parity. Complete local CI passed at `2026-11-17T10:45:41+04:00` on tested host commit `a0f2fb2942558cb1464ba44fd9dc147b2cc001af`; report: `reports/local-ci/pkhex-local-ci-20261117-104253-764111784.md`.
