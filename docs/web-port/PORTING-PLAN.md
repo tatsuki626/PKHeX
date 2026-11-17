@@ -102,7 +102,7 @@ The ASP.NET host and substantial feature set already exist in `tatsuki626/pkhex-
 9. **Audit assets and platform boundaries.** Ensure no Windows-targeted WinForms/Drawing dependency leaks into the Linux host; verify sprites and previews.
 10. **Validate deployment and release.** Test a fresh Docker deployment, persistence, auth, database indexing, backups and restore; run full local CI at integration/release gates.
 
-The detailed execution checklist and exit criteria are maintained in `docs/plans/phase-17-completeness-audit.md` in the web-host repository. The machine-readable inventory is the source of truth for per-window status.
+The detailed execution checklist and exit criteria are maintained in `docs/plans/phase-17-completeness-audit.md` in the web-host repository. The machine-readable inventory is the source of truth for per-window status. Detailed Main/SAVEditor/PKMEditor control mapping is maintained in [CORE-CONTROL-MAPPING.md](CORE-CONTROL-MAPPING.md); `control-audit.csv` remains the designer-level inventory.
 
 ## Non-goals / safeguards
 
