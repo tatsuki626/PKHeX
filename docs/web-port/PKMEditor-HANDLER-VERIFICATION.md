@@ -65,7 +65,7 @@ The host has begun closing validation contract item 1:
 
 This does not yet provide WinForms-equivalent focus-to-control/tab navigation, nor does it close the remaining dependent-option and generation-specific validation gaps. The full local CI suite passed at `2026-11-17T10:45:41+04:00` on host commit `a0f2fb2942558cb1464ba44fd9dc147b2cc001af`.
 
-### Level/EXP order-independent validation refinement (2026-11-17; local CI pending)
+### Level/EXP order-independent validation refinement (2026-11-18; local CI verified)
 
 The schema PATCH validator now checks a supplied Level/EXP pair against the species growth curve before applying either value. This prevents JSON property order from silently deciding which value wins. Level bounds use PKHeX's `Experience.MinLevel` and `Experience.MaxLevel`; editing Level or EXP caps excess maximum-level EXP to the growth-curve threshold, matching the desktop editor's normal non-HaX behavior (the web editor has no HaX override). Smoke tests cover conflicting values in both JSON property orders and the maximum-level cap. Host commits: Program.cs `2fcd855` with final-species growth-curve refinement `8b08737`, smoke tests `c24508e`. The pair check runs after Species is applied, and retains the explicitly supplied EXP once validated. This is a targeted correctness closure; invalid combo navigation, move learnability validation and broader per-format field constraints remain open.
 
@@ -105,3 +105,6 @@ CI follow-up: the first local run failed at compile time because the ability-nam
 Legacy-format follow-up (2026-11-17): the published 15:05 host CI report reached smoke test 1340, where the Generation 1 helper fixture failed while round-tripping `Version`. PK1/PK2 do not store origin-game metadata; their inherited property is `GameVersion.Invalid`, not a selectable saved game. Host fix `04983db` keeps `Version` visible but read-only for PKM formats below 3, and smoke commit `c71a430` asserts that capability. This preserves strict origin validation for formats that actually store a version. Full local CI is still pending; do not mark G-013/G-015 complete until a PASS report is published.
 
 Implementation refinement: host commit `3db7760` applies the format-3 origin-version gate after interface-property discovery, ensuring PK1/PK2 `Version` remains read-only even if an interface exposes a setter.
+
+
+CI verification: complete local CI passed at 2026-11-18T05:44:29+04:00 on host commit `647c4139972634aaf73f1ff335c5baaeda382e63`. Report: `reports/local-ci/pkhex-local-ci-20261118-054137-881046641.md`. This verifies the Level/EXP property-order checks and level-100 EXP normalization. G-012 remains open for incomplete ComboBox validation/focus parity and broader format-specific constraints.
