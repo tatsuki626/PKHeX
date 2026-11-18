@@ -115,3 +115,6 @@ CI verification: complete local CI passed at 2026-11-18T05:44:29+04:00 on host c
 Host commits `f05d171` and `c7d2c0f` add server-side option-name validation for Species, Held Item, Nature, Stat Alignment, regular/relearn moves, and Alpha Move. Errors retain field/tab metadata; Stat Alignment maps to Stats and Alpha Move maps to Moves. The browser already switches to the reported tab, focuses the matching field, sets `aria-invalid`, and announces the error. The validator deliberately does not reject a move merely because PKHeX legality says it is unlearnable. Smoke commit `2ca0827` covers invalid move selection and non-mutation of move/PP/PP Ups. Local CI pending.
 
 Still open: Ball and PK6/PK7 Country/SubRegion option-list validation, complete format/interface gate coverage, and byte-level atomicity checks for ordinary slots and staged Battle Pass records. G-012 remains open.
+
+
+CI follow-up (2026-11-18): the first run reached the new combo validator but a valid Nature PATCH threw because `Enum.IsDefined(Type, object)` received `Int32` for byte-backed `Nature`. Host commit `efe8424` now range-checks and casts to `byte`; smoke commit `f7497f9` adds a valid Nature PATCH regression. The failed run is published at `reports/local-ci/pkhex-local-ci-20261118-061604-772179726.md`. Re-run host local CI; do not treat this slice as verified yet.
