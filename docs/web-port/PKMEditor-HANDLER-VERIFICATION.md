@@ -118,3 +118,5 @@ Still open: Ball and PK6/PK7 Country/SubRegion option-list validation, complete 
 
 
 CI follow-up (2026-11-18): the first run reached the new combo validator but a valid Nature PATCH threw because `Enum.IsDefined(Type, object)` received `Int32` for byte-backed `Nature`. Host commit `efe8424` now range-checks and casts to `byte`; smoke commit `f7497f9` adds a valid Nature PATCH regression. The failed run is published at `reports/local-ci/pkhex-local-ci-20261118-061604-772179726.md`. Re-run host local CI; do not treat this slice as verified yet.
+
+CI follow-up (2026-11-18): the byte-backed Nature enum exception is fixed in host commit `efe8424`. The next CI run reached a successful PATCH but failed because the added smoke test expected an `ok` property; the actual PATCH response contract is `{ pokemon, fieldsUpdated }`. Host smoke commit `8a5f30a` now asserts the returned `pokemon.natureId`. Failed report: `reports/local-ci/pkhex-local-ci-20261118-061957-877282615.md`. Local CI rerun pending.
