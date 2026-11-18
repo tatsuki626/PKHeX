@@ -230,3 +230,6 @@ CI verification: complete local CI passed at 2026-11-18T05:44:29+04:00 on host c
 Host commits `f05d171` / `c7d2c0f` and smoke commit `2ca0827` add selection-name checks for Species, Held Item, Nature, Stat Alignment, move/relearn move slots, and Alpha Move. Field/tab errors use the existing browser navigation and focus behavior. Invalid move selection is covered with a rejected-edit non-mutation assertion. The implementation is not yet local-CI verified and does not close G-012.
 
 Outstanding: Ball and PK6/PK7 Country/SubRegion selection validation, all generation/interface gates, and serialized-slot/Battle Pass atomicity coverage.
+
+
+CI follow-up (2026-11-18): the first run exposed an `Enum.IsDefined` underlying-type exception for byte-backed `Nature` (HTTP 500 on valid selection). Host fix `efe8424` bounds/casts to `byte`; smoke regression `f7497f9` exercises a valid Nature PATCH. Failed report: `reports/local-ci/pkhex-local-ci-20261118-061604-772179726.md`. Verification remains pending; G-012 stays open.
