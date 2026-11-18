@@ -130,3 +130,7 @@ Host commits `688b06e`, `f808916` and `d9f4a24` extend the shared schema PATCH v
 
 
 CI follow-up (2026-11-18): report `pkhex-local-ci-20261118-070302-355277705.md` failed at the schema PATCH smoke on a legacy Gen 3 fixture whose Ball value is `0`; the initial option-list check treated that stored sentinel as invalid even when the edit did not change Ball. Host fix `7f6ee59` preserves zero as the legacy/no-ball sentinel while still validating every nonzero Ball against PKHeX's option IDs and the active format limit. This correction is not yet CI-verified; rerun local CI. G-012 remains open.
+
+### G-012 option-selection validation CI update (2026-11-18)
+
+The host implementation's Ball, Country and Region option-selection validation slice passed the full local CI suite at `tatsuki626/pkhex-docker` commit `04b389e1bd8c6f961b4598c71bdbc9c7aecba285` (report `reports/local-ci/pkhex-local-ci-20261118-071944-891788868.md`). The Ball value-0 compatibility correction is included. This is a verified partial slice, not closure of G-012; valid-range unavailable-option coverage across formats/interfaces and stronger serialized-slot/staged Battle Pass atomicity tests remain open.
