@@ -223,3 +223,10 @@ The copy, basic edit and schema PATCH paths all write only the encrypted BK4 sto
 Host commits `2fcd855` / `8b08737` and `c24508e` make supplied Level/EXP validation independent of JSON property order, evaluate the final species' growth curve after Species changes, and cap over-maximum EXP to the level-100 growth-curve threshold. Tests cover conflicting pairs in both field orders and over-cap EXP. This is a targeted correctness improvement; G-012 remains open for desktop-equivalent incomplete combo validation/focus and additional format-specific constraints.
 
 CI verification: complete local CI passed at 2026-11-18T05:44:29+04:00 on host commit `647c4139972634aaf73f1ff335c5baaeda382e63`. Report: `reports/local-ci/pkhex-local-ci-20261118-054137-881046641.md`. This verifies the Level/EXP property-order checks and level-100 EXP normalization. G-012 remains open for incomplete ComboBox validation/focus parity and broader format-specific constraints.
+
+
+### PKMEditor ComboBox validation — partial implementation (2026-11-18)
+
+Host commits `f05d171` / `c7d2c0f` and smoke commit `2ca0827` add selection-name checks for Species, Held Item, Nature, Stat Alignment, move/relearn move slots, and Alpha Move. Field/tab errors use the existing browser navigation and focus behavior. Invalid move selection is covered with a rejected-edit non-mutation assertion. The implementation is not yet local-CI verified and does not close G-012.
+
+Outstanding: Ball and PK6/PK7 Country/SubRegion selection validation, all generation/interface gates, and serialized-slot/Battle Pass atomicity coverage.
