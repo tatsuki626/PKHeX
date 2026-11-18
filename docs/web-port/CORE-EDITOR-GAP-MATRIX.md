@@ -233,3 +233,5 @@ Outstanding: Ball and PK6/PK7 Country/SubRegion selection validation, all genera
 
 
 CI follow-up (2026-11-18): the first run exposed an `Enum.IsDefined` underlying-type exception for byte-backed `Nature` (HTTP 500 on valid selection). Host fix `efe8424` bounds/casts to `byte`; smoke regression `f7497f9` exercises a valid Nature PATCH. Failed report: `reports/local-ci/pkhex-local-ci-20261118-061604-772179726.md`. Verification remains pending; G-012 stays open.
+
+CI follow-up (2026-11-18): after the enum fix, Nature PATCH succeeded; the smoke test itself incorrectly expected an `ok` field instead of the documented `{ pokemon, fieldsUpdated }` response. Host smoke commit `8a5f30a` checks the returned `pokemon.natureId`. Failure report: `reports/local-ci/pkhex-local-ci-20261118-061957-877282615.md`; verification still pending.
