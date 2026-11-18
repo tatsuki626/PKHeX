@@ -108,3 +108,10 @@ Implementation refinement: host commit `3db7760` applies the format-3 origin-ver
 
 
 CI verification: complete local CI passed at 2026-11-18T05:44:29+04:00 on host commit `647c4139972634aaf73f1ff335c5baaeda382e63`. Report: `reports/local-ci/pkhex-local-ci-20261118-054137-881046641.md`. This verifies the Level/EXP property-order checks and level-100 EXP normalization. G-012 remains open for incomplete ComboBox validation/focus parity and broader format-specific constraints.
+
+
+### G-012 — PKMEditor ComboBox selection parity (implementation partial; local CI pending)
+
+Host commits `f05d171` and `c7d2c0f` add server-side option-name validation for Species, Held Item, Nature, Stat Alignment, regular/relearn moves, and Alpha Move. Errors retain field/tab metadata; Stat Alignment maps to Stats and Alpha Move maps to Moves. The browser already switches to the reported tab, focuses the matching field, sets `aria-invalid`, and announces the error. The validator deliberately does not reject a move merely because PKHeX legality says it is unlearnable. Smoke commit `2ca0827` covers invalid move selection and non-mutation of move/PP/PP Ups. Local CI pending.
+
+Still open: Ball and PK6/PK7 Country/SubRegion option-list validation, complete format/interface gate coverage, and byte-level atomicity checks for ordinary slots and staged Battle Pass records. G-012 remains open.
